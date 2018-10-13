@@ -1,0 +1,12 @@
+parameters:
+    auth_token: '123'
+    api_url: 'https://api.telegram.org/bot555677621:AAEBmA5NI8psavI-7IibsXek09QqBd_dFkE/'
+
+commands:
+    message:
+        telegram.command.register.startstep:
+            text: '/start'
+
+    callbackquery:
+        telegram.command.register.subjectstep:
+            alias: 'subject_step'

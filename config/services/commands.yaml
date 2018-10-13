@@ -1,0 +1,13 @@
+services:
+    telegram.command.register.startstep:
+        alias: App\Command\Register\StartStep
+        public: true:
+
+    telegram.command.register.subjectstep:
+        alias: App\Command\Register\SubjectStep
+        public: true
+
+
+    telegram.command.register.intensitystep:
+        alias: App\Command\Register\IntensityStep
+        public: true

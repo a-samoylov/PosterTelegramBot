@@ -1,0 +1,19 @@
+services:
+#    #telegram methods
+#    telegram.model.methods.send.message.factory:
+#        alias: App\Service\Telegram\Model\Methods\Send\Message\Factory
+#        public: true
+#
+#    #telegram types
+#    telegram.model.type.replykeyboardmarkup.factory:
+#        alias: App\Service\Telegram\Model\Type\ReplyMarkup\ReplyKeyboardMarkup\Factory
+#        public: true
+#
+#    telegram.model.type.replymarkup.keyboardbutton.factory:
+#        alias: App\Service\Telegram\Model\Type\ReplyMarkup\KeyboardButton\Factory
+#        public: true
+#
+#    #models
+#    model.command.response.factory:
+#        alias: App\Model\Command\Response\Factory
+#        public: true
