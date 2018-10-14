@@ -28,19 +28,24 @@ class Bot
     /**
      * @ORM\Column(type="string", length=50, nullable=false)
      */
-    private $telegramToken;
+    private $token;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $accessKey;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $settings;
+
     // ########################################
 
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -53,10 +58,12 @@ class Bot
         $this->id = $id;
     }
 
+    // ########################################
+
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -69,26 +76,30 @@ class Bot
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getTelegramToken()
-    {
-        return $this->telegramToken;
-    }
-
-    /**
-     * @param string $telegramToken
-     */
-    public function setTelegramToken(string $telegramToken): void
-    {
-        $this->telegramToken = $telegramToken;
-    }
+    // ########################################
 
     /**
      * @return string
      */
-    public function getAccessKey()
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
+    // ########################################
+
+    /**
+     * @return string
+     */
+    public function getAccessKey(): string
     {
         return $this->accessKey;
     }
@@ -99,6 +110,24 @@ class Bot
     public function setAccessKey(string $accessKey): void
     {
         $this->accessKey = $accessKey;
+    }
+
+    // ########################################
+
+    /**
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
+
+    /**
+     * @param array $settings
+     */
+    public function setSettings(array $settings): void
+    {
+        $this->settings = $settings;
     }
 
     // ########################################

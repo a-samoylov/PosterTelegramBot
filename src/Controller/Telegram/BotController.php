@@ -4,6 +4,7 @@ namespace App\Controller\Telegram;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class BotController extends AbstractController
 {
@@ -18,7 +19,7 @@ class BotController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function create(
+    public function createBot(
         $name,
         $token,
         \App\Repository\Telegram\BotRepository $botRepository
@@ -31,6 +32,62 @@ class BotController extends AbstractController
                 'success' => false
             ]);
         }
+
+        return $this->json([
+            'success' => true
+        ]);
+    }
+
+    // ########################################
+
+    /**
+     * @Route("/telegram/bot/get/{id}", methods={"GET"}, name="telegram_bot_get")
+     *
+     * @param                                        $id
+     * @param \App\Repository\Telegram\BotRepository $botRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getBot($id, \App\Repository\Telegram\BotRepository $botRepository)
+    {
+        $bot = $botRepository->find((int)$id);
+        if (is_null($bot)) {
+            return $this->json([]);
+        }
+
+        return $this->json([
+            'id'       => $bot->getId(),
+            'name'     => $bot->getName(),
+            'token'    => $bot->getToken(),
+            'settings' => json_encode($bot->getSettings())
+        ]);
+    }
+
+    /**
+     * @Route("/telegram/bot/set/settings/{id}", methods={"PUT"}, name="telegram_bot_set_settings")
+     *
+     * @param string                                 $id
+     * @param \App\Repository\Telegram\BotRepository $botRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function setBotSettings(
+        $id,
+        \App\Repository\Telegram\BotRepository $botRepository
+    ) {
+        $bot = $botRepository->find((int)$id);
+        if (is_null($bot)) {
+            return $this->json([
+                'success' => false
+            ]);
+        }
+
+        $request  = Request::createFromGlobals();
+        $settings = (array)json_decode($request->getContent(), true);
+
+        //todo validate
+        $bot->setSettings($settings);
+        $botRepository->update($bot);
 
         return $this->json([
             'success' => true

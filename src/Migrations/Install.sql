@@ -12,10 +12,10 @@ CREATE TABLE telegram_chat (
   ENGINE = InnoDB;
 
 CREATE TABLE telegram_bot (
-  id             INT AUTO_INCREMENT NOT NULL,
-  name           VARCHAR(50)        NOT NULL,
-  telegram_token VARCHAR(50)        NOT NULL,
-  access_key     VARCHAR(50)        NOT NULL,
+  id         INT AUTO_INCREMENT NOT NULL,
+  name       VARCHAR(50)        NOT NULL,
+  token      VARCHAR(50)        NOT NULL,
+  access_key VARCHAR(50)        NOT NULL,
   PRIMARY KEY (id)
 )
   DEFAULT CHARACTER SET utf8
@@ -29,6 +29,7 @@ CREATE TABLE user (
   chat           INT                NOT NULL,
   telegram_bot   INT                NOT NULL,
   current_layout INT                NOT NULL,
+  settings       JSON        DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT chat FOREIGN KEY (chat) REFERENCES telegram_chat (id),
   CONSTRAINT telegram_bot FOREIGN KEY (telegram_bot) REFERENCES telegram_bot (id),

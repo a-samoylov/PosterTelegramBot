@@ -28,10 +28,17 @@ class BotRepository extends ServiceEntityRepository
         $bot = new Bot();
 
         $bot->setName($name);
-        $bot->setTelegramToken($token);
+        $bot->setToken($token);
         $bot->setAccessKey($accessKey);
 
         $this->getEntityManager()->persist($bot);
+        $this->getEntityManager()->flush($bot);
+
+        return $bot;
+    }
+
+    public function update(\App\Entity\Telegram\Bot $bot)
+    {
         $this->getEntityManager()->flush($bot);
 
         return $bot;
