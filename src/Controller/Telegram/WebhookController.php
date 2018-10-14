@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Telegram;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class TelegramController extends AbstractController
+class WebhookController extends AbstractController
 {
     // ########################################
 
     /**
      * Endpoint Telegram webhook
      *
-     * @Route("/telegram", name="telegram_controller")
+     * @Route("/telegram/webhook", name="telegram_controller")
      *
      * @param \App\Telegram\Auth\Checker               $telegramAuthChecker
      * @param \App\Command\Processor                   $telegramCommandProcessor
