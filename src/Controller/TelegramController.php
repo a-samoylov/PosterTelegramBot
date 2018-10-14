@@ -12,7 +12,8 @@ class TelegramController extends AbstractController
     // ########################################
 
     /**
-     * @Route("/telegram", name="telegram_index")
+     * Endpoint Telegram webhook
+     * @Route("/telegram", name="telegram_controller")
      *
      * @param \App\Telegram\Auth\Checker               $telegramAuthChecker
      * @param \App\Command\Processor                   $telegramCommandProcessor
