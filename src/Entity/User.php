@@ -2,11 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\UserRepository")
@@ -30,31 +27,103 @@ class User
     /**
      * @var \App\Entity\Telegram\Chat
      * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Chat")
-     * @JoinColumn(name="id", nullable=false, referencedColumnName="id")
+     * @JoinColumn(name="chat", nullable=false, referencedColumnName="id")
      */
     private $chat;
 
     /**
      * @var \App\Entity\Telegram\Bot
-     * @ORM\OneToOne(targetEntity="App\Entity\Bot")
-     * @JoinColumn(name="id", nullable=false, referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Bot")
+     * @JoinColumn(name="telegram_bot", nullable=false, referencedColumnName="id")
      */
-    private $bot;
+    private $telegramBot;
 
     /**
-     * @ORM\Column(type="int", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $currentLayout;
 
     // ########################################
 
-    public function __construct()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
+        return $this->id;
     }
 
-    // ########################################
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
+    /**
+     * @return string
+     */
+    public function getPhone(): string
+    {
+        return $this->phone;
+    }
 
+    /**
+     * @param string $phone
+     */
+    public function setPhone(string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return \App\Entity\Telegram\Chat
+     */
+    public function getChat(): \App\Entity\Telegram\Chat
+    {
+        return $this->chat;
+    }
+
+    /**
+     * @param \App\Entity\Telegram\Chat $chat
+     */
+    public function setChat(\App\Entity\Telegram\Chat $chat): void
+    {
+        $this->chat = $chat;
+    }
+
+    /**
+     * @return \App\Entity\Telegram\Bot
+     */
+    public function getTelegramBot(): \App\Entity\Telegram\Bot
+    {
+        return $this->telegramBot;
+    }
+
+    /**
+     * @param \App\Entity\Telegram\Bot $telegramBot
+     */
+    public function setTelegramBot(\App\Entity\Telegram\Bot $telegramBot): void
+    {
+        $this->telegramBot = $telegramBot;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCurrentLayout(): int
+    {
+        return $this->currentLayout;
+    }
+
+    /**
+     * @param int $currentLayout
+     */
+    public function setCurrentLayout(int $currentLayout): void
+    {
+        $this->currentLayout = $currentLayout;
+    }
 
     // ########################################
 }

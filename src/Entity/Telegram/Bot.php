@@ -3,9 +3,11 @@
 namespace App\Entity\Telegram;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Table;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Telegram\BotRepository")
+ * @Table(name="telegram_bot")})
  */
 class Bot
 {

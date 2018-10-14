@@ -11,38 +11,29 @@ CREATE TABLE telegram_chat (
   COLLATE utf8_general_ci
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS user;
-CREATE TABLE user (
-  id            INT      NOT NULL,
-  phone         VARCHAR(50) DEFAULT NULL,
-  intensity     SMALLINT    DEFAULT NULL,
-  register_step SMALLINT NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT telegram_chat_id FOREIGN KEY (id) REFERENCES telegram_chat (id)
-)
-  DEFAULT CHARACTER SET utf8
-  COLLATE utf8_general_ci
-  ENGINE = InnoDB;
-
-DROP TABLE IF EXISTS subject;
-CREATE TABLE subject (
-  id         INT AUTO_INCREMENT NOT NULL,
-  name       VARCHAR(70)        NOT NULL,
-  short_name VARCHAR(50) DEFAULT NULL,
+CREATE TABLE telegram_bot (
+  id             INT AUTO_INCREMENT NOT NULL,
+  name           VARCHAR(50)        NOT NULL,
+  telegram_token VARCHAR(50)        NOT NULL,
+  access_key     VARCHAR(50)        NOT NULL,
   PRIMARY KEY (id)
 )
   DEFAULT CHARACTER SET utf8
   COLLATE utf8_general_ci
   ENGINE = InnoDB;
 
-CREATE TABLE users_subjects (
-  user_id    INT NOT NULL,
-  subject_id INT NOT NULL,
-  INDEX user_id (user_id),
-  INDEX subject_id (subject_id),
-  PRIMARY KEY (user_id, subject_id),
-  CONSTRAINT user_id FOREIGN KEY (user_id) REFERENCES user (id),
-  CONSTRAINT subject_id FOREIGN KEY (subject_id) REFERENCES subject (id)
+DROP TABLE IF EXISTS user;
+CREATE TABLE user (
+  id             INT AUTO_INCREMENT NOT NULL,
+  phone          VARCHAR(50) DEFAULT NULL,
+  chat           INT                NOT NULL,
+  telegram_bot   INT                NOT NULL,
+  current_layout INT                NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT chat FOREIGN KEY (chat) REFERENCES telegram_chat (id),
+  CONSTRAINT telegram_bot FOREIGN KEY (telegram_bot) REFERENCES telegram_bot (id),
+  UNIQUE INDEX chat (chat),
+  UNIQUE INDEX telegram_bot (telegram_bot)
 )
   DEFAULT CHARACTER SET utf8
   COLLATE utf8_general_ci
@@ -74,13 +65,3 @@ CREATE TABLE telegram_send_callback_message (
   COLLATE utf8_general_ci
   ENGINE = InnoDB;
 
-INSERT INTO subject (name, short_name) VALUES ('Українська мова', 'Укр. мова');
-INSERT INTO subject (name) VALUES ('Математика');
-INSERT INTO subject (name) VALUES ('Фізика');
-INSERT INTO subject (name, short_name) VALUES ('Англійска мова', 'Англ. мова');
-
-
-INSERT INTO telegram_callback_message(type, name, message_text, data, create_date) VALUES
-(0, 'subject_step', 'Оберіть предмети', '[{"id": 1, "text": "Україньска мова"}, {"id": 2, "text": "Математика"}, {"id": 3, "text": "Фізика"}, {"id": 4, "text": "Наступні"}, {"id": 5, "text": "Попередні"}, {"id": 6, "text": "Зберегти"}]', '2018-09-25 00:00:00');
-INSERT INTO telegram_callback_message(type, name, message_text, data, create_date) VALUES
-(0, 'intensity_step', 'Оберіть інтенсивність заннять', '[{"id": 1, "text": "Мала"}, {"id": 2, "text": "Середня"}, {"id": 3, "text": "Велика"}]', '2018-09-24 00:00:00');

@@ -12,9 +12,9 @@ class IndexController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(\App\Repository\Telegram\CallbackMessageRepository $callbackMessageRepository)
+    public function index(\App\Repository\UserRepository $userRepository)
     {
-        $a = $callbackMessageRepository->find(1);
+        $a = $userRepository->find(1);
 
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',

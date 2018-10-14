@@ -4,7 +4,6 @@ namespace App\Controller\Telegram;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 class BotController extends AbstractController
 {
@@ -21,19 +20,24 @@ class BotController extends AbstractController
     }
 
     /**
-     * @Route("/telegram/bot/create/{name}", methods={"POST"}, name="telegram_bot")
+     * @Route("/telegram/bot/create/{name}/{token}", methods={"POST"}, name="telegram_bot")
      *
      * @param $name
+     * @param $token
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function create($name)
+    public function create($name, $token)
     {
-        $request   = Request::createFromGlobals();
-        $token     = $request->getContent();
-        $accessKey = time() . bin2hex(random_bytes(20));
+        try {
+            $accessKey = time() . bin2hex(random_bytes(20));
+            $this->botRepository->create($name, $token, $accessKey);
+        } catch (\Exception $exception) {
+            return $this->json([
+                'success' => false
+            ]);
+        }
 
-        $this->botRepository->create($name, $token, $accessKey);
 
         return $this->json([
             'success' => true
