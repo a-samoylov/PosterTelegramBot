@@ -35,7 +35,7 @@ class User
     private $chat;
 
     /**
-     * @var \App\Entity\Bot
+     * @var \App\Entity\Telegram\Bot
      * @ORM\OneToOne(targetEntity="App\Entity\Bot")
      * @JoinColumn(name="id", nullable=false, referencedColumnName="id")
      */
