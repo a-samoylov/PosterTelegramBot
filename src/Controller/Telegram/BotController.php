@@ -28,14 +28,10 @@ class BotController extends AbstractController
             $accessKey = time() . bin2hex(random_bytes(20));
             $botRepository->create($name, $token, $accessKey);
         } catch (\Exception $exception) {
-            return $this->json([
-                'success' => false
-            ]);
+            return $this->json(['success' => false]);
         }
 
-        return $this->json([
-            'success' => true
-        ]);
+        return $this->json(['success' => true]);
     }
 
     // ########################################
@@ -63,6 +59,8 @@ class BotController extends AbstractController
         ]);
     }
 
+    // ########################################
+
     /**
      * @Route("/telegram/bot/set/settings/{id}", methods={"PUT"}, name="telegram_bot_set_settings")
      *
@@ -77,9 +75,7 @@ class BotController extends AbstractController
     ) {
         $bot = $botRepository->find((int)$id);
         if (is_null($bot)) {
-            return $this->json([
-                'success' => false
-            ]);
+            return $this->json(['success' => false]);
         }
 
         $request  = Request::createFromGlobals();
@@ -89,9 +85,33 @@ class BotController extends AbstractController
         $bot->setSettings($settings);
         $botRepository->update($bot);
 
-        return $this->json([
-            'success' => true
-        ]);
+        return $this->json(['success' => true]);
+    }
+
+    // ########################################
+
+    /**
+     * @Route("/telegram/bot/generate/{id}", methods={"PUT"}, name="telegram_bot_generate")
+     *
+     * @param string                                 $id
+     * @param \App\Repository\Telegram\BotRepository $botRepository
+     * @param \App\Telegram\Bot\BotGenerator         $botGenerator
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function generate(
+        $id,
+        \App\Repository\Telegram\BotRepository $botRepository,
+        \App\Telegram\Bot\BotGenerator $botGenerator
+    ) {
+        $bot = $botRepository->find((int)$id);
+        if (is_null($bot)) {
+            return $this->json(['success' => false]);
+        }
+
+        $botGenerator->generate($bot);
+
+        return $this->json(['success' => true]);
     }
 
     // ########################################
