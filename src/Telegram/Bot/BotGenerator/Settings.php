@@ -10,16 +10,16 @@ namespace App\Telegram\Bot\BotGenerator;
 
 class Settings
 {
-    public const REPLY_INLINE_KEYBOARD_MARKUP = 'inline_keyboard_markup';
-    public const REPLY_KEYBOARD_MARKUP        = 'keyboard_markup';
+    public const TYPE_REPLY_INLINE_KEYBOARD_MARKUP = 'inline_keyboard_markup';
+    public const TYPE_REPLY_KEYBOARD_MARKUP        = 'keyboard_markup';
 
-    /** @var \App\Entity\Telegram\Layout[] */
+    /** @var \App\Telegram\Bot\BotGenerator\Settings\Layout[] */
     private $layouts;
 
     // ########################################
 
     /**
-     * @return \App\Entity\Telegram\Layout[]
+     * @return \App\Telegram\Bot\BotGenerator\Settings\Layout[]
      */
     public function getLayouts(): array
     {
@@ -27,9 +27,9 @@ class Settings
     }
 
     /**
-     * @param \App\Entity\Telegram\Layout $layout
+     * @param \App\Telegram\Bot\BotGenerator\Settings\Layout $layout
      */
-    public function addLayout(\App\Entity\Telegram\Layout $layout): void
+    public function addLayout(\App\Telegram\Bot\BotGenerator\Settings\Layout $layout): void
     {
         $this->layouts[] = $layout;
     }

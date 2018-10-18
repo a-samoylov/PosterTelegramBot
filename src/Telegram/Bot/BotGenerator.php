@@ -29,6 +29,7 @@ class BotGenerator
         $settings = $this->settingsFactory->create($bot);
 
         $a = 2;
+
     }
 
     // ########################################

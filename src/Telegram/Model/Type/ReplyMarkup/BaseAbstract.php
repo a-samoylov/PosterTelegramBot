@@ -10,4 +10,6 @@ namespace App\Telegram\Model\Type\ReplyMarkup;
 
 abstract class BaseAbstract
 {
+    // ########################################
+    // ########################################
 }
