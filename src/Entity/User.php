@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\UserRepository")
  */
-class User
+class User implements \Symfony\Component\Security\Core\User\UserInterface
 {
     // ########################################
 
@@ -25,6 +25,11 @@ class User
     private $phone;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
      * @var \App\Entity\Telegram\Chat
      * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Chat")
      * @JoinColumn(name="chat", nullable=false, referencedColumnName="id")
@@ -37,6 +42,18 @@ class User
      * @JoinColumn(name="telegram_bot", nullable=false, referencedColumnName="id")
      */
     private $telegramBot;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $posterAccount;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $posterAccessKey;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -110,6 +127,38 @@ class User
     }
 
     /**
+     * @return string|null
+     */
+    public function getPosterAccount(): ?string
+    {
+        return $this->posterAccount;
+    }
+
+    /**
+     * @param string|null $posterAccount
+     */
+    public function setPosterAccount(?string $posterAccount): void
+    {
+        $this->posterAccount = $posterAccount;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPosterAccessKey(): ?string
+    {
+        return $this->posterAccessKey;
+    }
+
+    /**
+     * @param string|null $posterAccessKey
+     */
+    public function setPosterAccessKey(?string $posterAccessKey): void
+    {
+        $this->posterAccessKey = $posterAccessKey;
+    }
+
+    /**
      * @return int
      */
     public function getCurrentLayout(): int
@@ -126,4 +175,33 @@ class User
     }
 
     // ########################################
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->getPhone();
+    }
+
+    public function eraseCredentials()
+    {
+    }
 }
