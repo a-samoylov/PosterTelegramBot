@@ -24,8 +24,8 @@ class ChatRepository extends ServiceEntityRepository
     // ########################################
 
     public function create(
-        int $chatId,
-        string $type,
+        int     $chatId,
+        string  $type,
         ?string $username,
         ?string $firstName,
         ?string $lastName

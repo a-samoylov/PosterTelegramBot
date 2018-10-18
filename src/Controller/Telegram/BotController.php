@@ -102,14 +102,18 @@ class BotController extends AbstractController
     public function generate(
         $id,
         \App\Repository\Telegram\BotRepository $botRepository,
-        \App\Telegram\Bot\BotGenerator $botGenerator
+        \App\Telegram\Bot\BotGenerator         $botGenerator
     ) {
         $bot = $botRepository->find((int)$id);
         if (is_null($bot)) {
             return $this->json(['success' => false]);
         }
 
-        $botGenerator->generate($bot);
+        try {
+            $botGenerator->generate($bot);
+        } catch (\Exception $exception) {
+            return $this->json(['success' => false]);
+        }
 
         return $this->json(['success' => true]);
     }

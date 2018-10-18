@@ -10,16 +10,17 @@ namespace App\Telegram\Bot\BotGenerator\Settings;
 
 class Factory
 {
+
     /**
-     * @var \App\Telegram\Bot\BotGenerator\Settings\Layout\Factory
+     * @var \App\Repository\Telegram\LayoutRepository
      */
-    private $layoutFactory;
+    private $layoutRepository;
 
     // ########################################
 
-    public function __construct(\App\Telegram\Bot\BotGenerator\Settings\Layout\Factory $layoutFactory)
+    public function __construct(\App\Repository\Telegram\LayoutRepository $layoutRepository)
     {
-        $this->layoutFactory = $layoutFactory;
+        $this->layoutRepository = $layoutRepository;
     }
 
     public function create(array $data): \App\Telegram\Bot\BotGenerator\Settings
@@ -28,10 +29,27 @@ class Factory
             throw new \App\Model\Exception\Validate(self::class, 'layouts', $data);
         }
 
+        $layoutsData = $data['layouts'];
+        foreach ($layoutsData as $layoutData) {
+            if (!isset($layoutData['name']) || !is_string($layoutData['name'])) {
+                throw new \App\Model\Exception\Validate(self::class, 'name', $data);
+            }
+
+            if (!isset($layoutData['text']) || !is_string($layoutData['text'])) {
+                throw new \App\Model\Exception\Validate(self::class, 'text', $data);
+            }
+
+            if (!isset($layoutData['reply_markup'])) {
+                throw new \App\Model\Exception\Validate(self::class, 'reply_markup', $data);
+            }
+        }
+
+        //todo validate other
+
         $result = new \App\Telegram\Bot\BotGenerator\Settings();
 
-        foreach ($data['layouts'] as $layoutData) {
-            $result->addLayout($this->layoutFactory->create($layoutData));
+        foreach ($layoutsData as $layoutData) {
+            $result->addLayout($this->layoutRepository->create($layoutData['name'], $layoutData['text']));
         }
 
         return $result;

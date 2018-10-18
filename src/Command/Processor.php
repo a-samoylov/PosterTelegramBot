@@ -58,7 +58,7 @@ class Processor
      *
      * @return \App\Command\Response
      */
-    public function process($update)
+    public function process(\App\Telegram\Model\Type\Update\BaseAbstract $update)
     {
         /** @var string $serviceName */
         $serviceName = $this->serviceResolver->resolve($update);

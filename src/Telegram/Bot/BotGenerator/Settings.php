@@ -10,13 +10,13 @@ namespace App\Telegram\Bot\BotGenerator;
 
 class Settings
 {
-    /** @var \App\Telegram\Bot\BotGenerator\Settings\Layout[] */
+    /** @var \App\Entity\Telegram\Layout[] */
     private $layouts;
 
     // ########################################
 
     /**
-     * @return \App\Telegram\Bot\BotGenerator\Settings\Layout[]
+     * @return \App\Entity\Telegram\Layout[]
      */
     public function getLayouts(): array
     {
@@ -24,9 +24,9 @@ class Settings
     }
 
     /**
-     * @param \App\Telegram\Bot\BotGenerator\Settings\Layout $layout
+     * @param \App\Entity\Telegram\Layout $layout
      */
-    public function addLayout(\App\Telegram\Bot\BotGenerator\Settings\Layout $layout): void
+    public function addLayout(\App\Entity\Telegram\Layout $layout): void
     {
         $this->layouts[] = $layout;
     }
