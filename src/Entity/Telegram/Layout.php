@@ -3,9 +3,12 @@
 namespace App\Entity\Telegram;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\Table;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Telegram\LayoutRepository")
+ * @Table(name="telegram_layout")})
  */
 class Layout
 {
@@ -17,6 +20,13 @@ class Layout
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @var \App\Entity\Telegram\Bot
+     * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Bot")
+     * @JoinColumn(name="bot", nullable=false, referencedColumnName="id")
+     */
+    private $bot;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -39,6 +49,24 @@ class Layout
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    // ########################################
+
+    /**
+     * @return \App\Entity\Telegram\Bot
+     */
+    public function getBot(): \App\Entity\Telegram\Bot
+    {
+        return $this->bot;
+    }
+
+    /**
+     * @param \App\Entity\Telegram\Bot $bot
+     */
+    public function setBot(\App\Entity\Telegram\Bot $bot): void
+    {
+        $this->bot = $bot;
     }
 
     // ########################################

@@ -8,8 +8,6 @@
 
 namespace App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup;
 
-use App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup;
-
 class Factory
 {
     // ########################################
@@ -17,9 +15,9 @@ class Factory
     /**
      * @return \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup
      */
-    public function create(): InlineKeyboardMarkup
+    public function create(): \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup
     {
-        return new InlineKeyboardMarkup();
+        return new \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup();
     }
 
     // ########################################

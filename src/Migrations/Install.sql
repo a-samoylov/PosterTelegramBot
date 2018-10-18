@@ -22,7 +22,19 @@ CREATE TABLE telegram_bot (
   COLLATE utf8_general_ci
   ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS user;
+CREATE TABLE telegram_layout (
+  id           INT AUTO_INCREMENT NOT NULL,
+  bot          INT                NOT NULL,
+  name         VARCHAR(255)       NOT NULL,
+  text         VARCHAR(1000)      NOT NULL,
+  reply_markup JSON DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT bot FOREIGN KEY (bot) REFERENCES telegram_bot (id)
+)
+  DEFAULT CHARACTER SET utf8
+  COLLATE utf8_general_ci
+  ENGINE = InnoDB;
+
 CREATE TABLE user (
   id             INT AUTO_INCREMENT NOT NULL,
   phone          VARCHAR(50) DEFAULT NULL,

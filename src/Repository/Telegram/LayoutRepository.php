@@ -23,10 +23,15 @@ class LayoutRepository extends ServiceEntityRepository
 
     // ########################################
 
-    public function create(string $name, string $text): Layout
-    {
+    public function create(
+        \App\Entity\Telegram\Bot $bot,
+        string                   $name,
+        string                   $text,
+        array                    $replayMarkup
+    ): Layout {
         $layout = new Layout();
 
+        $layout->setBot($bot);
         $layout->setName($name);
         $layout->setText($text);
 

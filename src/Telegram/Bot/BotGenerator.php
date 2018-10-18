@@ -26,8 +26,9 @@ class BotGenerator
 
     public function generate(\App\Entity\Telegram\Bot $bot)
     {
-        $settings = $this->settingsFactory->create($bot->getSettings());
+        $settings = $this->settingsFactory->create($bot);
 
+        $a = 2;
     }
 
     // ########################################

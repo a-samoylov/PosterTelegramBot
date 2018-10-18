@@ -16,15 +16,33 @@ class Factory
      */
     private $layoutRepository;
 
+    /**
+     * @var \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\Factory
+     */
+    private $inlineKeyboardMarkupFactory;
+
+    /**
+     * @var \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\InlineKeyboardButton\Factory
+     */
+    private $inlineKeyboardButtonFactory;
+
     // ########################################
 
-    public function __construct(\App\Repository\Telegram\LayoutRepository $layoutRepository)
-    {
-        $this->layoutRepository = $layoutRepository;
+    public function __construct(
+        \App\Repository\Telegram\LayoutRepository                                              $layoutRepository,
+        \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\Factory                      $inlineKeyboardMarkupFactory,
+        \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\InlineKeyboardButton\Factory $inlineKeyboardButtonFactory
+    ) {
+        $this->layoutRepository            = $layoutRepository;
+        $this->inlineKeyboardMarkupFactory = $inlineKeyboardMarkupFactory;
+        $this->inlineKeyboardButtonFactory = $inlineKeyboardButtonFactory;
     }
 
-    public function create(array $data): \App\Telegram\Bot\BotGenerator\Settings
+    // ########################################
+
+    public function create(\App\Entity\Telegram\Bot $bot): \App\Telegram\Bot\BotGenerator\Settings
     {
+        $data = $bot->getSettings();
         if (empty($data['layouts'])) {
             throw new \App\Model\Exception\Validate(self::class, 'layouts', $data);
         }
@@ -49,7 +67,19 @@ class Factory
         $result = new \App\Telegram\Bot\BotGenerator\Settings();
 
         foreach ($layoutsData as $layoutData) {
-            $result->addLayout($this->layoutRepository->create($layoutData['name'], $layoutData['text']));
+            $replayMarkup = $layoutData['reply_markup'];
+            if ($replayMarkup['type'] === \App\Telegram\Bot\BotGenerator\Settings::REPLY_INLINE_KEYBOARD_MARKUP) {
+                $inlineKeyboardMarkup = $this->inlineKeyboardMarkupFactory->create();
+
+                $rowInlineKeyboard = [];
+                foreach ($replayMarkup['buttons'] as $inlineKeyboardButtonData) {
+                    $rowInlineKeyboard[] = $this->inlineKeyboardButtonFactory->create($inlineKeyboardButtonData['text'], '');
+                }
+
+                !empty($rowInlineKeyboard) && $inlineKeyboardMarkup->addRowInlineKeyboard($rowInlineKeyboard);
+            }
+
+            $result->addLayout($this->layoutRepository->create($bot, $layoutData['name'], $layoutData['text'], []));
         }
 
         return $result;

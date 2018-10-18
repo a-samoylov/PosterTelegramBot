@@ -10,6 +10,9 @@ namespace App\Telegram\Bot\BotGenerator;
 
 class Settings
 {
+    public const REPLY_INLINE_KEYBOARD_MARKUP = 'inline_keyboard_markup';
+    public const REPLY_KEYBOARD_MARKUP        = 'keyboard_markup';
+
     /** @var \App\Entity\Telegram\Layout[] */
     private $layouts;
 
