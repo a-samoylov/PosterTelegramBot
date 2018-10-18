@@ -46,6 +46,40 @@ class Layout
     // ########################################
 
     /**
+     * @return \App\Entity\Telegram\Bot
+     */
+    public function getBot(): \App\Entity\Telegram\Bot
+    {
+        return $this->bot;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText(): string
+    {
+        return $this->text;
+    }
+
+    // ########################################
+
+    /**
      * @return \App\Telegram\Model\Type\ReplyMarkup\BaseAbstract
      */
     public function getReplyMarkup(): \App\Telegram\Model\Type\ReplyMarkup\BaseAbstract

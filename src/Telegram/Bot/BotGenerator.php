@@ -15,11 +15,19 @@ class BotGenerator
      */
     private $settingsFactory;
 
+    /**
+     * @var \App\Repository\Telegram\LayoutRepository
+     */
+    private $layoutRepository;
+
     // ########################################
 
-    public function __construct(\App\Telegram\Bot\BotGenerator\Settings\Factory $settingsFactory)
-    {
-        $this->settingsFactory = $settingsFactory;
+    public function __construct(
+        \App\Telegram\Bot\BotGenerator\Settings\Factory $settingsFactory,
+        \App\Repository\Telegram\LayoutRepository       $layoutRepository
+    ) {
+        $this->settingsFactory  = $settingsFactory;
+        $this->layoutRepository = $layoutRepository;
     }
 
     // ########################################
@@ -28,8 +36,14 @@ class BotGenerator
     {
         $settings = $this->settingsFactory->create($bot);
 
-        $a = 2;
-
+        foreach ($settings->getLayouts() as $layout) {
+            $this->layoutRepository->create(
+                $layout->getBot(),
+                $layout->getName(),
+                $layout->getText(),
+                $layout->getReplyMarkup()
+            );
+        }
     }
 
     // ########################################
