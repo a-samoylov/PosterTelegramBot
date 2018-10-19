@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\UserRepository")
  */
-class User implements \Symfony\Component\Security\Core\User\UserInterface
+class User
 {
     // ########################################
 
@@ -175,33 +175,4 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
     }
 
     // ########################################
-
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getUsername()
-    {
-        return $this->getPhone();
-    }
-
-    public function eraseCredentials()
-    {
-    }
 }
