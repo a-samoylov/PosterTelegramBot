@@ -22,13 +22,14 @@ class OAuth extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractControlle
         $code    = $request->query->get('code');
         $account = $request->query->get('account');
 
-        /** @var \App\Entity\User $user */
-        $user = $this->getUser();
+        $user = $userRepository->find($request->getSession()->get('USER_ID'));
 
         $user->setPosterAccount($account);
         $user->setPosterAccessKey($posterAuth->getAccessToken($account, $code));
 
         $userRepository->save($user);
+
+        return $this->redirectToRoute('index');
     }
 
 }

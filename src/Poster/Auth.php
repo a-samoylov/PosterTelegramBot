@@ -25,7 +25,7 @@ class Auth
             'code'               => $code,
             'application_id'     => $this->applicationId,
             'application_secret' => $this->applicationSecret,
-            'redirect_url'       => $this->redirectUrl,
+            'redirect_uri'       => $this->redirectUrl,
             'grant_type'         => 'authorization_code',
         ];
 
@@ -42,10 +42,9 @@ class Auth
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_USERAGENT, 'Poster (http://joinposter.com)');
 
-        $data = curl_exec($ch);
+        $data = json_decode(curl_exec($ch), true);
         curl_close($ch);
-
-        return $data['access_token'];
+        return $data['new_access_token'];
     }
 
     public function getPosterOAuthUrl(): string

@@ -10,11 +10,8 @@ abstract class Api
 
     protected $accessToken;
 
-    public function __construct(\Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token)
+    public function __construct(\App\Entity\User $user)
     {
-        /** @var \App\Entity\User $user */
-        $user = $token->getUser();
-
         $this->account     = $user->getPosterAccount();
         $this->accessToken = $user->getPosterAccessKey();
     }
@@ -52,6 +49,6 @@ abstract class Api
         $data = curl_exec($ch);
         curl_close($ch);
 
-        return $data;
+        return json_decode($data, true);
     }
 }

@@ -20,6 +20,11 @@ class User
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=50, unique=true)
+     */
+    private $login;
+
+    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $phone;
@@ -32,14 +37,14 @@ class User
     /**
      * @var \App\Entity\Telegram\Chat
      * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Chat")
-     * @JoinColumn(name="chat", nullable=false, referencedColumnName="id")
+     * @JoinColumn(name="chat", nullable=true, referencedColumnName="id")
      */
     private $chat;
 
     /**
      * @var \App\Entity\Telegram\Bot
      * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Bot")
-     * @JoinColumn(name="telegram_bot", nullable=false, referencedColumnName="id")
+     * @JoinColumn(name="telegram_bot", nullable=true, referencedColumnName="id")
      */
     private $telegramBot;
 
@@ -56,7 +61,7 @@ class User
     private $posterAccessKey;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $currentLayout;
 
@@ -76,6 +81,38 @@ class User
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param string $login
+     */
+    public function setLogin(string $login): void
+    {
+        $this->login = $login;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 
     /**
