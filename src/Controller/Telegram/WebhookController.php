@@ -52,7 +52,7 @@ class WebhookController extends AbstractController
         }
 
         try {
-            $data = (array)json_decode($request->getContent(), true);//php://input
+            $data   = (array)json_decode($request->getContent(), true);//php://input
             $update = $updateResolver->resolve($data);
             if (is_null($update)) {
                 $logger->alert('Update not recognize.', [

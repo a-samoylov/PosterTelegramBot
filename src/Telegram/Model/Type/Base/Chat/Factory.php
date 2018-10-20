@@ -8,27 +8,23 @@
 
 namespace App\Telegram\Model\Type\Base\Chat;
 
-use App\Model\Exception\Validate as ValidateException;
-use App\Telegram\Model\Type\Base\Chat;
-use App\Telegram\Model\Type\FactoryInterface;
-
-class Factory implements FactoryInterface
+class Factory implements \App\Telegram\Model\Type\FactoryInterface
 {
     // ########################################
 
-    public function create(array $data): Chat
+    public function create(array $data): \App\Telegram\Model\Type\Base\Chat
     {
         if (empty($data['id']) || !is_int($data['id'])) {
-            throw new ValidateException(self::class, 'id');
+            throw new \App\Model\Exception\Validate(self::class, 'id');
         }
 
         if (empty($data['type']) || !is_string($data['type'])) {
-            throw new ValidateException(self::class, 'type');
+            throw new \App\Model\Exception\Validate(self::class, 'type');
         }
 
         //todo other fields
 
-        return new Chat(
+        return new \App\Telegram\Model\Type\Base\Chat(
             $data['id'],
             $data['type']
         );

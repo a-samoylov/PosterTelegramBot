@@ -10,9 +10,8 @@ namespace App\Command;
 
 class ServiceResolver
 {
-    public const DEFAULT_COMMAND_SERVICE                 = 'telegram.default.command';
-
-    public const START_COMMAND = 'telegram.command.start';
+    public const DEFAULT_COMMAND_SERVICE = 'telegram.command.default';
+    public const START_COMMAND           = 'telegram.command.start';
 
     public const REGISTER_SUBJECT_STEP_COMMAND_SERVICE   = 'telegram.command.register.subjectstep';
     public const REGISTER_INTENSITY_STEP_COMMAND_SERVICE = 'telegram.command.register.intensitystep';

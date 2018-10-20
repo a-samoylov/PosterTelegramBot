@@ -339,9 +339,9 @@ class Message
         \DateTime $date,
         \App\Telegram\Model\Type\Base\Chat $chat
     ) {
-        $this->messageId             = $messageId;
-        $this->date                  = $date;
-        $this->chat                  = $chat;
+        $this->messageId = $messageId;
+        $this->date      = $date;
+        $this->chat      = $chat;
     }
 
     // ########################################

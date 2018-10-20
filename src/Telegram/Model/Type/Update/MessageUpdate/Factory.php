@@ -8,12 +8,7 @@
 
 namespace App\Telegram\Model\Type\Update\MessageUpdate;
 
-use App\Model\Exception\Validate as ValidateException;
-use App\Telegram\Model\Type\FactoryInterface;
-use App\Telegram\Model\Type\Update\MessageUpdate;
-use App\Telegram\Model\Type\Base\Message\Factory as MessageFactory;
-
-class Factory implements FactoryInterface
+class Factory implements \App\Telegram\Model\Type\FactoryInterface
 {
     // ########################################
 
@@ -24,20 +19,20 @@ class Factory implements FactoryInterface
 
     // ########################################
 
-    public function __construct(MessageFactory $messageFactory)
+    public function __construct(\App\Telegram\Model\Type\Base\Message\Factory $messageFactory)
     {
         $this->messageFactory = $messageFactory;
     }
 
     // ########################################
 
-    public function create(array $data): MessageUpdate
+    public function create(array $data): \App\Telegram\Model\Type\Update\MessageUpdate
     {
         if (empty($data['update_id']) && is_int($data['update_id'])) {
-            throw new ValidateException(self::class, 'update_id');
+            throw new \App\Model\Exception\Validate(self::class, 'update_id');
         }
 
-        return new MessageUpdate(
+        return new \App\Telegram\Model\Type\Update\MessageUpdate(
             $data['update_id'],
             $this->messageFactory->create($data['message'])
         );
