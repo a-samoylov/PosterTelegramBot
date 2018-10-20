@@ -20,6 +20,7 @@ class WebhookController extends AbstractController
      * @param \App\Telegram\Auth\Checker               $telegramAuthChecker
      * @param \App\Command\Processor                   $telegramCommandProcessor
      * @param \App\Telegram\Model\Type\Update\Resolver $updateResolver
+     * @param \App\Repository\Telegram\BotRepository   $botRepository
      * @param \Psr\Log\LoggerInterface                 $logger
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -29,6 +30,7 @@ class WebhookController extends AbstractController
         \App\Telegram\Auth\Checker               $telegramAuthChecker,
         \App\Command\Processor                   $telegramCommandProcessor,
         \App\Telegram\Model\Type\Update\Resolver $updateResolver,
+        \App\Repository\Telegram\BotRepository   $botRepository,
         \Psr\Log\LoggerInterface                 $logger
     ) {
         $request  = Request::createFromGlobals();
@@ -78,7 +80,7 @@ class WebhookController extends AbstractController
         }
 
         /** @var \App\Command\Response $commandResponse */
-        $commandResponse = $telegramCommandProcessor->process($update);
+        $commandResponse = $telegramCommandProcessor->process($botRepository->findOneBy(['accessKey' => $accessKey]), $update);
         if (!$commandResponse->isSuccess()) {
             $response->setContent(json_encode(['message' => $commandResponse->getMessage()]));
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);

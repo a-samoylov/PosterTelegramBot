@@ -11,7 +11,9 @@ namespace App\Command;
 class ServiceResolver
 {
     public const DEFAULT_COMMAND_SERVICE                 = 'telegram.default.command';
-    public const REGISTER_START_STEP_COMMAND_SERVICE     = 'telegram.command.register.startstep';
+
+    public const START_COMMAND = 'telegram.command.start';
+
     public const REGISTER_SUBJECT_STEP_COMMAND_SERVICE   = 'telegram.command.register.subjectstep';
     public const REGISTER_INTENSITY_STEP_COMMAND_SERVICE = 'telegram.command.register.intensitystep';
 
@@ -66,11 +68,7 @@ class ServiceResolver
     {
         $userEntity = $this->userRepository->find($update->getMessage()->getChat()->getId());
         if (is_null($userEntity)) {
-            return self::REGISTER_START_STEP_COMMAND_SERVICE;
-        }
-
-        if ($userEntity->isRegisterSubjectStep()) {
-            return self::REGISTER_SUBJECT_STEP_COMMAND_SERVICE;
+            return self::START_COMMAND;
         }
 
         return null;
@@ -89,22 +87,6 @@ class ServiceResolver
         $userEntity = $this->userRepository->find($callbackQuery->getFrom()->getId());
         if (is_null($userEntity)) {
             throw new \App\Model\Exception\Logic('Not found user by chat id from callback query.');
-        }
-
-        if ($userEntity->isRegister()) {
-            //todo ZNO test
-        }
-
-        if ($userEntity->isRegisterStartStep()) {
-            return self::REGISTER_START_STEP_COMMAND_SERVICE;
-        }
-
-        if ($userEntity->isRegisterSubjectStep()) {
-            return self::REGISTER_SUBJECT_STEP_COMMAND_SERVICE;
-        }
-
-        if ($userEntity->isRegisterSubjectStep()) {
-            return self::REGISTER_INTENSITY_STEP_COMMAND_SERVICE;
         }
 
         return null;

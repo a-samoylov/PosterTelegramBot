@@ -1,0 +1,5 @@
+services:
+    telegram.command.start:
+        alias: App\Command\Process\SendMessage
+        public: true:
+

@@ -27,6 +27,11 @@ abstract class BaseAbstract implements AwareInterface
      */
     private $container;
 
+    /**
+     * @var \App\Entity\Telegram\Bot
+     */
+    private $bot;
+
     // ########################################
 
     public function setResponseFactory(Response\Factory $responseFactory)
@@ -105,6 +110,24 @@ abstract class BaseAbstract implements AwareInterface
     public function setContainer(\Psr\Container\ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    // ########################################
+
+    /**
+     * @return \App\Entity\Telegram\Bot
+     */
+    public function getBot(): \App\Entity\Telegram\Bot
+    {
+        return $this->bot;
+    }
+
+    /**
+     * @param \App\Entity\Telegram\Bot $bot
+     */
+    public function setBot(\App\Entity\Telegram\Bot $bot): void
+    {
+        $this->bot = $bot;
     }
 
     // ########################################

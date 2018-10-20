@@ -54,17 +54,21 @@ class Processor
     // ########################################
 
     /**
+     * @param \App\Entity\Telegram\Bot                     $bot
      * @param \App\Telegram\Model\Type\Update\BaseAbstract $update
      *
      * @return \App\Command\Response
      */
-    public function process(\App\Telegram\Model\Type\Update\BaseAbstract $update)
-    {
+    public function process(
+        \App\Entity\Telegram\Bot                     $bot,
+        \App\Telegram\Model\Type\Update\BaseAbstract $update
+    ) {
         /** @var string $serviceName */
         $serviceName = $this->serviceResolver->resolve($update);
 
         /** @var \App\Command\BaseAbstract $command */
         $command = $this->container->get($serviceName);
+        $command->setBot($bot);
         $command->setUpdate($update);
         $command->setResponseFactory($this->responseFactory);
         $command->setContainer($this->container);
