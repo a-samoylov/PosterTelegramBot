@@ -132,7 +132,7 @@ class Bot
      */
     public function setSettings(array $settings): void
     {
-        $this->settings = (array)json_encode($settings);
+        $this->settings = json_encode($settings);
     }
 
     /**

@@ -132,17 +132,17 @@ class Layout
     /**
      * @return mixed
      */
-    public function getReplyMarkup()
+    public function getReplyMarkup(): array
     {
-        return $this->replyMarkup;
+        return (array)json_decode($this->replyMarkup);
     }
 
     /**
      * @param mixed $replyMarkup
      */
-    public function setReplyMarkup($replyMarkup): void
+    public function setReplyMarkup(array $replyMarkup): void
     {
-        $this->replyMarkup = $replyMarkup;
+        $this->replyMarkup = json_encode($replyMarkup);
     }
 
     // ########################################
