@@ -13,7 +13,6 @@ class Factory
     // ########################################
 
     public function create(
-        \App\Entity\Telegram\Bot $bot,
         int $layoutId,
         int $buttonId,
         string $action,
@@ -29,7 +28,6 @@ class Factory
         //todo validate( check is exist data)
 
         return new \App\Telegram\Bot\BotGenerator\Settings\Relationship(
-            $bot,
             $layoutId,
             $buttonId,
             $action,

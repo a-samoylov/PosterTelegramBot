@@ -15,9 +15,6 @@ class Relationship
 
     // ########################################
 
-    /** @var \App\Entity\Telegram\Bot */
-    private $bot;
-
     /**
      * @var int
      */
@@ -41,20 +38,17 @@ class Relationship
     // ########################################
 
     /**
-     * @param \App\Entity\Telegram\Bot $bot
-     * @param int                      $layoutId
-     * @param int                      $buttonId
-     * @param string                   $action
-     * @param int                      $anotherId
+     * @param int    $layoutId
+     * @param int    $buttonId
+     * @param string $action
+     * @param int    $anotherId
      */
     public function __construct(
-        \App\Entity\Telegram\Bot $bot,
         int $layoutId,
         int $buttonId,
         string $action,
         int $anotherId
     ) {
-        $this->bot       = $bot;
         $this->layoutId  = $layoutId;
         $this->buttonId  = $buttonId;
         $this->action    = $action;
@@ -62,14 +56,6 @@ class Relationship
     }
 
     // ########################################
-
-    /**
-     * @return \App\Entity\Telegram\Bot
-     */
-    public function getBot(): \App\Entity\Telegram\Bot
-    {
-        return $this->bot;
-    }
 
     /**
      * @return int

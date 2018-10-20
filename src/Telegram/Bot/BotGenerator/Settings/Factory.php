@@ -57,15 +57,14 @@ class Factory
 
         //todo validate other
 
-        $result = new \App\Telegram\Bot\BotGenerator\Settings();
+        $result = new \App\Telegram\Bot\BotGenerator\Settings($bot);
 
         foreach ($layoutsData as $layoutData) {
-            $result->addLayout($this->layoutFactory->create($bot, $layoutData));
+            $result->addLayout($this->layoutFactory->create($layoutData));
         }
 
         foreach ($relationshipsData as $relationshipData) {
             $result->addRelationship($this->relationshipFactory->create(
-                $bot,
                 $relationshipData['layout_id'],
                 $relationshipData['button_id'],
                 $relationshipData['action'],

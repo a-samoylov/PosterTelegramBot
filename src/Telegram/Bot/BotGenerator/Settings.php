@@ -13,11 +13,24 @@ class Settings
     public const TYPE_REPLY_INLINE_KEYBOARD_MARKUP = 'inline_keyboard_markup';
     public const TYPE_REPLY_KEYBOARD_MARKUP        = 'keyboard_markup';
 
+    /** @var \App\Entity\Telegram\Bot */
+    private $bot;
+
     /** @var \App\Telegram\Bot\BotGenerator\Settings\Layout[] */
     private $layouts;
 
     /** @var \App\Telegram\Bot\BotGenerator\Settings\Relationship[] */
     private $relationships;
+
+    // ########################################
+
+    /**
+     * @param \App\Entity\Telegram\Bot $bot
+     */
+    public function __construct(\App\Entity\Telegram\Bot $bot)
+    {
+        $this->bot = $bot;
+    }
 
     // ########################################
 

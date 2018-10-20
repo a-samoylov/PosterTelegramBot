@@ -12,9 +12,6 @@ class Layout
 {
     // ########################################
 
-    /** @var \App\Entity\Telegram\Bot */
-    private $bot;
-
     /** @var int */
     private $id;
 
@@ -24,34 +21,24 @@ class Layout
     /** @var string */
     private $text;
 
-    /** @var \App\Telegram\Model\Type\ReplyMarkup\BaseAbstract */
+    /** @var array */
     private $replyMarkup;
 
     // ########################################
 
     /**
-     * @param \App\Entity\Telegram\Bot $bot
-     * @param int                      $id
-     * @param string                   $name
-     * @param string                   $text
+     * @param int    $id
+     * @param string $name
+     * @param string $text
      */
-    public function __construct(\App\Entity\Telegram\Bot $bot, int $id, string $name, string $text)
+    public function __construct(int $id, string $name, string $text)
     {
-        $this->bot  = $bot;
         $this->id   = $id;
         $this->name = $name;
         $this->text = $text;
     }
 
     // ########################################
-
-    /**
-     * @return \App\Entity\Telegram\Bot
-     */
-    public function getBot(): \App\Entity\Telegram\Bot
-    {
-        return $this->bot;
-    }
 
     /**
      * @return int
@@ -80,17 +67,17 @@ class Layout
     // ########################################
 
     /**
-     * @return \App\Telegram\Model\Type\ReplyMarkup\BaseAbstract
+     * @return array
      */
-    public function getReplyMarkup(): \App\Telegram\Model\Type\ReplyMarkup\BaseAbstract
+    public function getReplyMarkup(): array
     {
         return $this->replyMarkup;
     }
 
     /**
-     * @param \App\Telegram\Model\Type\ReplyMarkup\BaseAbstract $replyMarkup
+     * @param array $replyMarkup
      */
-    public function setReplyMarkup(\App\Telegram\Model\Type\ReplyMarkup\BaseAbstract $replyMarkup): void
+    public function setReplyMarkup(array $replyMarkup): void
     {
         $this->replyMarkup = $replyMarkup;
     }

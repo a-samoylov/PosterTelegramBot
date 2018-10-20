@@ -40,6 +40,9 @@ class BotGenerator
             $this->layoutRepository->create($layout);
         }
 
+        foreach ($settings->getRelationships() as $relationship) {
+
+        }
 
     }
 
