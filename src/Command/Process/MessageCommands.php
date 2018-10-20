@@ -91,7 +91,7 @@ class MessageCommands extends \App\Command\BaseAbstract
             throw new \Exception("Command layout not found. Command: {$update->getMessage()->getText()}");
         }
 
-        $this->helper->sendLayout($chatEntity, $layout);
+        $this->helper->sendLayout($userEntity, $layout);
     }
 
     // ########################################
