@@ -134,7 +134,7 @@ class Layout
      */
     public function getReplyMarkup(): array
     {
-        return (array)json_decode($this->replyMarkup);
+        return (array)json_decode($this->replyMarkup, true);
     }
 
     /**

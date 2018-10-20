@@ -44,6 +44,28 @@ class Helper
         \App\Entity\Telegram\Layout $layout
     ) {
         $sendMessageModel = $this->sendMessageFactory->create($user->getChat()->getId(), $layout->getText());
+
+        $replyMarkup = $layout->getReplyMarkup();
+        if (!empty($replyMarkup)) {
+            if ($replyMarkup['type'] === \App\Telegram\Bot\BotGenerator\Settings::TYPE_REPLY_INLINE_KEYBOARD_MARKUP) {
+                $inlineKeyboardMarkup = $this->inlineKeyboardMarkupFactory->create();
+
+                foreach ($replyMarkup['buttons'] as $buttonsRow) {
+                    $row = [];
+                    foreach ($buttonsRow as $inlineButton) {
+                        $row[] = $this->inlineKeyboardButtonFactory->create($inlineButton['text'], json_encode([
+                            'bot' => $layout->getBot()->getId(),
+                            'btn' => $inlineButton['id']
+                        ]));
+                    }
+
+                    $inlineKeyboardMarkup->addRowInlineKeyboard($row);
+                }
+
+                $sendMessageModel->setReplyMarkup($inlineKeyboardMarkup);
+            }
+        }
+
         $sendMessageModel->send();
     }
 
