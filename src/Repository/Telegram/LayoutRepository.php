@@ -33,7 +33,7 @@ class LayoutRepository extends ServiceEntityRepository
         $layout->setLayoutId($settingsLayout->getId());
         $layout->setName($settingsLayout->getName());
         $layout->setText($settingsLayout->getText());
-        $layout->setReplyMarkup($settingsLayout->getReplyMarkup());
+        $settingsLayout->hasReplyMarkup() && $layout->setReplyMarkup($settingsLayout->getReplyMarkup());
 
         $this->getEntityManager()->persist($layout);
         $this->getEntityManager()->flush($layout);

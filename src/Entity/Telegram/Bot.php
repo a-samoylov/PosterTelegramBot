@@ -161,5 +161,10 @@ class Bot
         $this->commands = json_encode($commands);
     }
 
+    public function removeCommands()
+    {
+        $this->commands = json_encode([]);
+    }
+
     // ########################################
 }

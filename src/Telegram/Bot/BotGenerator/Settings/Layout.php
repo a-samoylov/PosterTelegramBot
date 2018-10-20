@@ -22,7 +22,7 @@ class Layout
     private $text;
 
     /** @var array */
-    private $replyMarkup;
+    private $replyMarkup = [];
 
     // ########################################
 
@@ -65,6 +65,11 @@ class Layout
     }
 
     // ########################################
+
+    public function hasReplyMarkup(): bool
+    {
+        return !empty($this->replyMarkup);
+    }
 
     /**
      * @return array

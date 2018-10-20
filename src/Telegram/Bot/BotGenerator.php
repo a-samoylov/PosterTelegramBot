@@ -76,4 +76,22 @@ class BotGenerator
     }
 
     // ########################################
+
+    private function clearOldLayouts()
+    {
+        //todo
+    }
+
+    private function clearOldRelationships()
+    {
+        //todo
+    }
+
+    private function clearOldCommands(\App\Entity\Telegram\Bot $bot)
+    {
+        $bot->removeCommands();
+        $this->botRepository->update($bot);
+    }
+
+    // ########################################
 }

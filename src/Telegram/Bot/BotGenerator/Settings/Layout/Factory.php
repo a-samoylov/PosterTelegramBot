@@ -22,6 +22,10 @@ class Factory
             $data['text']
         );
 
+        if (!isset($data['reply_markup'])) {
+            return $result;
+        }
+
         $replyMarkup = $data['reply_markup'];
         if ($replyMarkup['type'] === \App\Telegram\Bot\BotGenerator\Settings::TYPE_REPLY_INLINE_KEYBOARD_MARKUP) {
             $result->setReplyMarkup($replyMarkup);

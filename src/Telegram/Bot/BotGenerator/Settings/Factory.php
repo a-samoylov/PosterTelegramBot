@@ -57,10 +57,6 @@ class Factory
             if (!isset($layoutData['text']) || !is_string($layoutData['text'])) {
                 throw new \App\Model\Exception\Validate(self::class, 'text', $data);
             }
-
-            if (!isset($layoutData['reply_markup'])) {
-                throw new \App\Model\Exception\Validate(self::class, 'reply_markup', $data);
-            }
         }
 
         //todo validate other
