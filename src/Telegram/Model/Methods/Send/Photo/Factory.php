@@ -10,20 +10,20 @@ namespace App\Telegram\Model\Methods\Send\Photo;
 
 class Factory
 {
-    /** @var \App\Telegram\Model\Request\Json */
-    private $jsonRequest = null;
+    /** @var \App\Telegram\Model\Request\Json\Factory */
+    private $jsonRequestFactory;
 
     // ########################################
 
-    public function __construct(\App\Telegram\Model\Request\Json $jsonRequest)
+    public function __construct(\App\Telegram\Model\Request\Json\Factory $jsonRequestFactory)
     {
-        $this->jsonRequest = $jsonRequest;
+        $this->jsonRequestFactory = $jsonRequestFactory;
     }
 
     public function create(int $chatId, string $caption, string $url): \App\Telegram\Model\Methods\Send\Photo
     {
         $result = new \App\Telegram\Model\Methods\Send\Photo($chatId, $caption, $url);
-        $result->setJsonRequest($this->jsonRequest);
+        $result->setJsonRequestFactory($this->jsonRequestFactory);
 
         return $result;
     }

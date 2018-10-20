@@ -12,7 +12,9 @@ interface AwareInterface
 {
     // ########################################
 
-    public function setJsonRequest(\App\Telegram\Model\Request\Json $jsonRequest);
+    public function setToken(string $token);
+
+    public function setJsonRequestFactory(\App\Telegram\Model\Request\Json\Factory $jsonRequestFactory);
 
     // ########################################
 }

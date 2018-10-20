@@ -12,6 +12,13 @@ class Json extends BaseAbstract
 {
     // ########################################
 
+    public function __construct(string $token, Curl $curlRequest)
+    {
+        parent::__construct($token, $curlRequest);
+    }
+
+    // ########################################
+
     //TODO REFACTORING !!!!!!!!!!!!!!!!!!
     //took from telegram docs
 

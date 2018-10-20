@@ -18,12 +18,10 @@ class BaseAbstract
 
     // ########################################
 
-    public function __construct(
-        Curl $curlRequest,
-        \App\Config\Telegram $telegramConfig
-    ) {
-        $this->apiUrl          = $telegramConfig->getApiUrl();
-        $this->curlRequest     = $curlRequest;
+    public function __construct(string $token, Curl $curlRequest)
+    {
+        $this->apiUrl      = "https://api.telegram.org/{$token}/";
+        $this->curlRequest = $curlRequest;
     }
 
     // ########################################

@@ -10,14 +10,14 @@ namespace App\Telegram\Model\Methods\Send\Message;
 
 class Factory
 {
-    /** @var \App\Telegram\Model\Request\Json */
-    private $jsonRequest = null;
+    /** @var \App\Telegram\Model\Request\Json\Factory */
+    private $jsonRequestFactory;
 
     // ########################################
 
-    public function __construct(\App\Telegram\Model\Request\Json $jsonRequest)
+    public function __construct(\App\Telegram\Model\Request\Json\Factory $jsonRequestFactory)
     {
-        $this->jsonRequest = $jsonRequest;
+        $this->jsonRequestFactory = $jsonRequestFactory;
     }
 
     /**
@@ -29,7 +29,7 @@ class Factory
     public function create($chatId, string $text)
     {
         $result = new \App\Telegram\Model\Methods\Send\Message($chatId, $text);
-        $result->setJsonRequest($this->jsonRequest);
+        $result->setJsonRequestFactory($this->jsonRequestFactory);
 
         return $result;
     }

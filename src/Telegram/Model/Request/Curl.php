@@ -60,5 +60,6 @@ class Curl
 
         return $this->responseFactory->createSuccessResponse($response);
     }
+
     // ########################################
 }

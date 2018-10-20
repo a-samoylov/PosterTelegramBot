@@ -10,14 +10,22 @@ namespace App\Telegram\Model\Methods;
 
 abstract class BaseAbstract implements AwareInterface
 {
-    /** @var \App\Telegram\Model\Request\Json */
-    private $jsonRequest = null;
+    /** @var string */
+    private $token;
+
+    /** @var \App\Telegram\Model\Request\Json\Factory */
+    private $jsonRequestFactory;
 
     // ########################################
 
-    public function setJsonRequest(\App\Telegram\Model\Request\Json $jsonRequest)
+    public function setToken(string $token)
     {
-        $this->jsonRequest = $jsonRequest;
+        $this->token = $token;
+    }
+
+    public function setJsonRequestFactory(\App\Telegram\Model\Request\Json\Factory $jsonRequestFactory)
+    {
+        $this->jsonRequestFactory = $jsonRequestFactory;
     }
 
     // ########################################
@@ -27,7 +35,8 @@ abstract class BaseAbstract implements AwareInterface
      */
     public function send()
     {
-        $response = $this->jsonRequest->execute($this->getMethodName(), $this->getRequestParams());
+        $jsonRequest = $this->jsonRequestFactory->create($this->token);
+        $response    = $jsonRequest->execute($this->getMethodName(), $this->getRequestParams());
         if ($response instanceof \App\Telegram\Model\Request\Response\Success) {
             return $response->getData();
         }

@@ -10,14 +10,14 @@ namespace App\Telegram\Model\Methods\Send\Invoice;
 
 class Factory
 {
-    /** @var \App\Telegram\Model\Request\Json */
-    private $jsonRequest = null;
+    /** @var \App\Telegram\Model\Request\Json\Factory */
+    private $jsonRequestFactory;
 
     // ########################################
 
-    public function __construct(\App\Telegram\Model\Request\Json $jsonRequest)
+    public function __construct(\App\Telegram\Model\Request\Json\Factory $jsonRequestFactory)
     {
-        $this->jsonRequest = $jsonRequest;
+        $this->jsonRequestFactory = $jsonRequestFactory;
     }
 
     /**
@@ -44,7 +44,7 @@ class Factory
     ): \App\Telegram\Model\Methods\Send\Invoice {
         $result = new \App\Telegram\Model\Methods\Send\Invoice($chatId, $title, $description, $payload, $providerToken, $startParameter,
                                                                $currency, $prices);
-        $result->setJsonRequest($this->jsonRequest);
+        $result->setJsonRequestFactory($this->jsonRequestFactory);
 
         return $result;
     }
