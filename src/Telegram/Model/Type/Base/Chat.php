@@ -124,11 +124,27 @@ class Chat
     }
 
     /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return string
      */
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 
     /**
@@ -140,11 +156,27 @@ class Chat
     }
 
     /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
      * @return string
      */
     public function getUsername(): ?string
     {
         return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
     }
 
     /**
@@ -156,11 +188,27 @@ class Chat
     }
 
     /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
      * @return string
      */
     public function getLastName(): ?string
     {
         return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
     }
 
     /**
@@ -172,11 +220,27 @@ class Chat
     }
 
     /**
+     * @param bool $allMembersAreAdministrators
+     */
+    public function setAllMembersAreAdministrators(bool $allMembersAreAdministrators): void
+    {
+        $this->allMembersAreAdministrators = $allMembersAreAdministrators;
+    }
+
+    /**
      * @return \App\Telegram\Model\Type\Base\ChatPhoto
      */
     public function getPhoto(): \App\Telegram\Model\Type\Base\ChatPhoto
     {
         return $this->photo;
+    }
+
+    /**
+     * @param \App\Telegram\Model\Type\Base\ChatPhoto $photo
+     */
+    public function setPhoto(\App\Telegram\Model\Type\Base\ChatPhoto $photo): void
+    {
+        $this->photo = $photo;
     }
 
     /**
@@ -188,11 +252,27 @@ class Chat
     }
 
     /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
      * @return string
      */
     public function getInviteLink(): string
     {
         return $this->inviteLink;
+    }
+
+    /**
+     * @param string $inviteLink
+     */
+    public function setInviteLink(string $inviteLink): void
+    {
+        $this->inviteLink = $inviteLink;
     }
 
     /**
@@ -204,6 +284,14 @@ class Chat
     }
 
     /**
+     * @param \App\Telegram\Model\Type\Base\Message $pinnedMessage
+     */
+    public function setPinnedMessage(\App\Telegram\Model\Type\Base\Message $pinnedMessage): void
+    {
+        $this->pinnedMessage = $pinnedMessage;
+    }
+
+    /**
      * @return string
      */
     public function getStickerSetName(): string
@@ -212,11 +300,27 @@ class Chat
     }
 
     /**
+     * @param string $stickerSetName
+     */
+    public function setStickerSetName(string $stickerSetName): void
+    {
+        $this->stickerSetName = $stickerSetName;
+    }
+
+    /**
      * @return bool
      */
     public function isCanSetStickerSet(): bool
     {
         return $this->canSetStickerSet;
+    }
+
+    /**
+     * @param bool $canSetStickerSet
+     */
+    public function setCanSetStickerSet(bool $canSetStickerSet): void
+    {
+        $this->canSetStickerSet = $canSetStickerSet;
     }
 
     // ########################################

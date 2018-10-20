@@ -24,10 +24,16 @@ class Factory implements \App\Telegram\Model\Type\FactoryInterface
 
         //todo other fields
 
-        return new \App\Telegram\Model\Type\Base\Chat(
+        $result = new \App\Telegram\Model\Type\Base\Chat(
             $data['id'],
             $data['type']
         );
+
+        isset($data['first_name']) && $result->setFirstName($data['first_name']);
+        isset($data['last_name'])  && $result->setLastName($data['last_name']);
+        isset($data['username'])   && $result->setUsername($data['username']);
+
+        return $result;
     }
 
     // ########################################

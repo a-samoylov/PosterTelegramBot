@@ -20,7 +20,7 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, unique=true)
+     * @ORM\Column(type="string", length=50, unique=true, nullable=true)
      */
     private $login;
 
@@ -30,7 +30,7 @@ class User
     private $phone;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
