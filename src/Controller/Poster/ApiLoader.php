@@ -21,43 +21,57 @@ class ApiLoader extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractContr
 
         $menuApi = new \App\Poster\Menu($user);
 
-        $productsResponse = $menuApi->getProducts();
-
-        dump($productsResponse);
-
-        $productsResponse = $productsResponse['response'];
+        $categoriesResponse = $menuApi->getCategories()['response'];
 
         $categories = [];
 
-        foreach ($productsResponse as $product) {
-            $categories[$product['menu_category_id']] = [
-                'name'     => $product['category_name'],
-                'products' => []
+        foreach ($categoriesResponse as $categoryResponse) {
+            $productsResponse = $menuApi->getProducts((int)$categoryResponse['category_id'])['response'];
+
+            $products = [];
+
+            foreach ($productsResponse as $productResponse) {
+                $price = $productResponse['price'];
+                $price = array_shift($price);
+
+                $photo = 'https://joinposter.com' . $productResponse['photo_origin'];
+
+                $products[] = new \App\Entity\User\Poster\Product
+                ((int)$productResponse['product_id'], $productResponse['product_name'], (int)$price, $photo);
+            }
+
+            $categories[$categoryResponse['category_id']] = [
+                'name'            => $categoryResponse['category_name'],
+                'parent_category' => $categoryResponse['parent_category'],
+                'products'        => $products,
             ];
         }
 
-        foreach ($productsResponse as $product) {
-            $price = $product['price'];
-            $price = array_shift($price);
+        $user->setPosterMenu(new \App\Entity\User\Poster\Menu($this->getSubCategories(0, $categories)));
 
-            $photo = 'https://joinposter.com' . $product['photo_origin'];
+        $spotsApi = new \App\Poster\Spots($user);
 
-            $categories[$product['menu_category_id']]['products'][] = new \App\Entity\User\Poster\Product((int)$product['product_id'],
-                                                                                                          $product['product_name'],
-                                                                                                          (int)$price, $photo);
-        }
+        $spotId = (int)$spotsApi->getSpotsTablesHalls()['response'][0]['spot_id'];
 
-        $categoryObjects = [];
-
-        foreach ($categories as $id => $category) {
-            $categoryObjects[] = new \App\Entity\User\Poster\Category($id, $category['name'], $category['products']);
-        }
-
-        $user->setPosterMenu(new \App\Entity\User\Poster\Menu($categoryObjects));
+        $user->setPosterSpotId($spotId);
 
         $userRepository->save($user);
-
-        return $this->redirectToRoute('index');
+        //        return $this->redirectToRoute('index');
     }
 
+    private function getSubCategories(int $parentCategoryId, array $categories): array
+    {
+        $subCategories = [];
+
+        foreach ($categories as $id => $category) {
+            if ($category['parent_category'] != $parentCategoryId) {
+                continue;
+            }
+
+            $subCategories[] = new \App\Entity\User\Poster\Category($id, $category['name'], $this->getSubCategories($id, $categories),
+                                                                    $category['products']);
+        }
+
+        return $subCategories;
+    }
 }
