@@ -22,6 +22,7 @@ class Factory
 
     /**
      * @param int                                                     $chatId
+     * @param \App\Entity\Telegram\Bot                                $bot
      * @param string                                                  $title
      * @param string                                                  $description
      * @param string                                                  $payload
@@ -34,6 +35,7 @@ class Factory
      */
     public function create(
         int $chatId,
+        \App\Entity\Telegram\Bot $bot,
         string $title,
         string $description,
         string $payload,
@@ -45,6 +47,7 @@ class Factory
         $result = new \App\Telegram\Model\Methods\Send\Invoice($chatId, $title, $description, $payload, $providerToken, $startParameter,
                                                                $currency, $prices);
         $result->setJsonRequestFactory($this->jsonRequestFactory);
+        $result->setToken($bot->getToken());
 
         return $result;
     }

@@ -20,7 +20,7 @@ class BaseAbstract
 
     public function __construct(string $token, Curl $curlRequest)
     {
-        $this->apiUrl      = "https://api.telegram.org/{$token}/";
+        $this->apiUrl      = "https://api.telegram.org/bot{$token}/";
         $this->curlRequest = $curlRequest;
     }
 

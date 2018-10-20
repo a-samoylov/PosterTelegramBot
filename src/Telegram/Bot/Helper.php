@@ -43,7 +43,7 @@ class Helper
         \App\Entity\Telegram\User   $user,
         \App\Entity\Telegram\Layout $layout
     ) {
-        $sendMessageModel = $this->sendMessageFactory->create($user->getChat()->getId(), $layout->getText());
+        $sendMessageModel = $this->sendMessageFactory->create($user, $layout->getBot(), $layout->getText());
 
         $replyMarkup = $layout->getReplyMarkup();
         if (!empty($replyMarkup)) {

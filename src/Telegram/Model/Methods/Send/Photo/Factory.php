@@ -20,10 +20,11 @@ class Factory
         $this->jsonRequestFactory = $jsonRequestFactory;
     }
 
-    public function create(int $chatId, string $caption, string $url): \App\Telegram\Model\Methods\Send\Photo
+    public function create(int $chatId, \App\Entity\Telegram\Bot $bot, string $caption, string $url): \App\Telegram\Model\Methods\Send\Photo
     {
         $result = new \App\Telegram\Model\Methods\Send\Photo($chatId, $caption, $url);
         $result->setJsonRequestFactory($this->jsonRequestFactory);
+        $result->setToken($bot->getToken());
 
         return $result;
     }

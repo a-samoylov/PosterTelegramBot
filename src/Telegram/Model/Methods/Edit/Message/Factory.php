@@ -29,10 +29,11 @@ class Factory
      *
      * @return \App\Telegram\Model\Methods\Edit\Message
      */
-    public function create(int $chatId, int $messageId, string $text)
+    public function create(int $chatId, \App\Entity\Telegram\Bot $bot, int $messageId, string $text)
     {
         $result = new \App\Telegram\Model\Methods\Edit\Message($chatId, $messageId, $text);
         $result->setJsonRequestFactory($this->jsonRequestFactory);
+        $result->setToken($bot->getToken());
 
         return $result;
     }

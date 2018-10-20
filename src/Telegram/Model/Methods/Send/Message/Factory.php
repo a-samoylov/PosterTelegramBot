@@ -21,15 +21,17 @@ class Factory
     }
 
     /**
-     * @param string|integer $chatId
-     * @param string         $text
+     * @param \App\Entity\Telegram\User $user
+     * @param \App\Entity\Telegram\Bot  $bot
+     * @param string                    $text
      *
      * @return \App\Telegram\Model\Methods\Send\Message
      */
-    public function create($chatId, string $text)
+    public function create(\App\Entity\Telegram\User $user, \App\Entity\Telegram\Bot $bot, string $text)
     {
-        $result = new \App\Telegram\Model\Methods\Send\Message($chatId, $text);
+        $result = new \App\Telegram\Model\Methods\Send\Message($user->getChat()->getId(), $text);
         $result->setJsonRequestFactory($this->jsonRequestFactory);
+        $result->setToken($bot->getToken());
 
         return $result;
     }
