@@ -8,14 +8,7 @@ class Spots extends Api
 {
     public function getSpotsTablesHalls()
     {
-        $url = "https://demo.joinposter.com/api/spots.getSpotTablesHalls?token={$this->accessToken}";
-
-        return $this->sendRequest($url);
-    }
-
-    public function getTableHallTables(int $spotId, int $hallId)
-    {
-        $url = "https://demo.joinposter.com/api/spots.getTableHallTables?token={$this->accessToken}&spot_id={$spotId}&hall_id={$hallId}&without_deleted=1";
+        $url = "https://{$this->account}.joinposter.com/api/spots.getSpotTablesHalls?token={$this->accessToken}";
 
         return $this->sendRequest($url);
     }

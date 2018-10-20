@@ -44,10 +44,9 @@ class Layout
     private $text;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $replyMarkup;
-
 
     // ########################################
 

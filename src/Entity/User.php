@@ -71,6 +71,12 @@ class User
      */
     private $posterMenu;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    private $posterSpotId;
+
     // ########################################
 
     /**
@@ -227,5 +233,19 @@ class User
         $this->posterMenu = serialize($posterMenu);
     }
 
-    // ########################################
+    /**
+     * @return int
+     */
+    public function getPosterSpotId(): int
+    {
+        return $this->posterSpotId;
+    }
+
+    /**
+     * @param int $posterSpotId
+     */
+    public function setPosterSpotId(int $posterSpotId): void
+    {
+        $this->posterSpotId = $posterSpotId;
+    }
 }

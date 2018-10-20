@@ -12,14 +12,18 @@ class Category
     /** @var string */
     private $name;
 
+    /** @var self[] */
+    private $subCategories;
+
     /** @var \App\Entity\User\Poster\Product[] */
     private $products;
 
-    public function __construct(int $id, string $name, array $products)
+    public function __construct(int $id, string $name, array $subCategories, array $products)
     {
-        $this->id       = $id;
-        $this->name     = $name;
-        $this->products = $products;
+        $this->id            = $id;
+        $this->name          = $name;
+        $this->subCategories = $subCategories;
+        $this->products      = $products;
     }
 
     /**
@@ -36,6 +40,14 @@ class Category
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return \App\Entity\User\Poster\Category[]
+     */
+    public function getSubCategories(): array
+    {
+        return $this->subCategories;
     }
 
     /**

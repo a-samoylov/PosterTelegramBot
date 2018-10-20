@@ -8,14 +8,14 @@ class Menu extends Api
 {
     public function getCategories()
     {
-        $url = "https://demo.joinposter.com/api/menu.getCategories?token={$this->accessToken}";
+        $url = "https://{$this->account}.joinposter.com/api/menu.getCategories?token={$this->accessToken}";
 
         return $this->sendRequest($url);
     }
 
-    public function getProducts()
+    public function getProducts(int $categoryId)
     {
-        $url = "https://demo.joinposter.com/api/menu.getProducts?token={$this->accessToken}";
+        $url = "https://{$this->account}.joinposter.com/api/menu.getProducts?token={$this->accessToken}&category_id={$categoryId}";
 
         return $this->sendRequest($url);
     }
