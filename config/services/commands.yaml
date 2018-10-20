@@ -1,5 +1,12 @@
 services:
-    telegram.command.process.message:
-        alias: App\Command\Process\MessageCommands
+    telegram.command.default:
+        alias: App\Command\ByDefault\v1
         public: true
 
+    telegram.command.process.send.message:
+        alias: App\Command\Process\SendMessageCommands
+        public: true
+
+    telegram.command.process.callback.message:
+        alias: App\Command\Process\CallbackMessageCommands
+        public: true

@@ -39,7 +39,7 @@ class UserRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush($user);
     }
 
-    public function findByChatId(\App\Entity\Telegram\Chat $chat): ?\App\Entity\Telegram\User
+    public function findByChat(\App\Entity\Telegram\Chat $chat): ?\App\Entity\Telegram\User
     {
         return $this->createQueryBuilder('user')
                     ->andWhere('user.chat = :chat')

@@ -10,11 +10,9 @@ namespace App\Command;
 
 class ServiceResolver
 {
-    public const DEFAULT_COMMAND_SERVICE      = 'telegram.command.default';
-    public const SEND_MESSAGE_PROCESS_COMMAND = 'telegram.command.process.message';
-
-    public const REGISTER_SUBJECT_STEP_COMMAND_SERVICE   = 'telegram.command.register.subjectstep';
-    public const REGISTER_INTENSITY_STEP_COMMAND_SERVICE = 'telegram.command.register.intensitystep';
+    public const DEFAULT_COMMAND_SERVICE          = 'telegram.command.default';
+    public const SEND_MESSAGE_PROCESS_COMMAND     = 'telegram.command.process.send.message';
+    public const CALLBACK_MESSAGE_PROCESS_COMMAND = 'telegram.command.process.callback.message';
 
     /**
      * @var \App\Repository\UserRepository
@@ -41,34 +39,13 @@ class ServiceResolver
         }
 
         if ($update instanceof \App\Telegram\Model\Type\Update\CallbackQuery) {
-            $serviceName = $this->getServiceNameByCallbackQuery($update);
-            if (!is_null($serviceName)) {
-                return $serviceName;
-            }
+            return self::CALLBACK_MESSAGE_PROCESS_COMMAND;
         }
         //todo other
 
         //todo event if cant found service name
 
         return self::DEFAULT_COMMAND_SERVICE;
-    }
-
-    // ########################################
-
-    /**
-     * @param \App\Telegram\Model\Type\Update\CallbackQuery $callbackQuery
-     *
-     * @return null|string
-     * @throws \App\Model\Exception\Logic
-     */
-    private function getServiceNameByCallbackQuery(\App\Telegram\Model\Type\Update\CallbackQuery $callbackQuery): ?string
-    {
-        $userEntity = $this->userRepository->find($callbackQuery->getFrom()->getId());
-        if (is_null($userEntity)) {
-            throw new \App\Model\Exception\Logic('Not found user by chat id from callback query.');
-        }
-
-        return null;
     }
 
     // ########################################

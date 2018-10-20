@@ -8,7 +8,7 @@
 
 namespace App\Command\Process;
 
-class MessageCommands extends \App\Command\BaseAbstract
+class SendMessageCommands extends \App\Command\BaseAbstract
 {
     /**
      * @var \App\Repository\UserRepository
@@ -75,7 +75,7 @@ class MessageCommands extends \App\Command\BaseAbstract
             );
         }
 
-        $userEntity = $this->userRepository->findByChatId($chatEntity);
+        $userEntity = $this->userRepository->findByChat($chatEntity);
         if (is_null($userEntity)) {
             $userEntity = $this->userRepository->create($chatEntity);
         }
