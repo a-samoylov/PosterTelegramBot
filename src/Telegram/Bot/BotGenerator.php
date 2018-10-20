@@ -41,7 +41,7 @@ class BotGenerator
         $this->settingsFactory           = $settingsFactory;
         $this->layoutRepository          = $layoutRepository;
         $this->callbackMessageRepository = $callbackMessageRepository;
-        $this->botRepository = $botRepository;
+        $this->botRepository             = $botRepository;
     }
 
     // ########################################

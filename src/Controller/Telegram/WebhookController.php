@@ -14,8 +14,9 @@ class WebhookController extends AbstractController
     /**
      * Endpoint Telegram webhook
      *
-     * @Route("/telegram/webhook", name="telegram_controller")
+     * @Route("/telegram/webhook/{accessKey}", name="telegram_controller")
      *
+     * @param string                                   $accessKey
      * @param \App\Telegram\Auth\Checker               $telegramAuthChecker
      * @param \App\Command\Processor                   $telegramCommandProcessor
      * @param \App\Telegram\Model\Type\Update\Resolver $updateResolver
@@ -24,6 +25,7 @@ class WebhookController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(
+        string                                   $accessKey,
         \App\Telegram\Auth\Checker               $telegramAuthChecker,
         \App\Command\Processor                   $telegramCommandProcessor,
         \App\Telegram\Model\Type\Update\Resolver $updateResolver,
@@ -33,10 +35,11 @@ class WebhookController extends AbstractController
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
 
-        if (!$telegramAuthChecker->isValidToken($request->query->get('token'))) {
+        if (!$telegramAuthChecker->isValidAccessKey($accessKey)) {
             $logger->alert('Invalid access token.', [
                 '_SERVER'     => $_SERVER,
                 '_POST'       => $_POST,
+                'access_key'  => $accessKey,
                 'php://input' => $request->getContent(),
             ]);
 

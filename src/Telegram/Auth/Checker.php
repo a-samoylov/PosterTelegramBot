@@ -10,20 +10,25 @@ namespace App\Telegram\Auth;
 
 class Checker
 {
-    private $accessToken = null;
+
+    /**
+     * @var \App\Repository\Telegram\BotRepository
+     */
+    private $botRepository;
 
     // ########################################
 
-    public function __construct(string $accessToken)
+    public function __construct(\App\Repository\Telegram\BotRepository $botRepository)
     {
-        $this->accessToken = $accessToken;
+        $this->botRepository = $botRepository;
     }
 
     // ########################################
 
-    public function isValidToken($token)
+    public function isValidAccessKey($accessKey)
     {
-        return $this->accessToken == $token;
+        $bot = $this->botRepository->findOneBy(['accessKey' => $accessKey]);
+        return !is_null($bot);
     }
 
     // ########################################

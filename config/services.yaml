@@ -34,9 +34,6 @@ services:
         arguments:
             $baseDir: '%kernel.project_dir%'
 
-    App\Telegram\Auth\Checker:
-        factory: 'App\Telegram\Auth\Checker\Factory:create'
-
     App\Poster\Auth:
         arguments:
             $applicationId: 271
