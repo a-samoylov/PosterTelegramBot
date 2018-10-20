@@ -22,6 +22,11 @@ class Layout
     private $id;
 
     /**
+     * @ORM\Column(type="integer", nullable=false, unique=true)
+     */
+    private $layoutId;
+
+    /**
      * @var \App\Entity\Telegram\Bot
      * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Bot")
      * @JoinColumn(name="bot", nullable=false, referencedColumnName="id")
@@ -49,6 +54,24 @@ class Layout
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    // ########################################
+
+    /**
+     * @return int
+     */
+    public function getLayoutId(): int
+    {
+        return $this->layoutId;
+    }
+
+    /**
+     * @param int $layoutId
+     */
+    public function setLayoutId($layoutId): void
+    {
+        $this->layoutId = $layoutId;
     }
 
     // ########################################

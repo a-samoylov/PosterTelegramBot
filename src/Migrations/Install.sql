@@ -24,12 +24,14 @@ CREATE TABLE telegram_bot (
 
 CREATE TABLE telegram_layout (
   id           INT AUTO_INCREMENT NOT NULL,
+  layout_id    INT                NOT NULL,
   bot          INT                NOT NULL,
   name         VARCHAR(255)       NOT NULL,
   text         VARCHAR(1000)      NOT NULL,
   reply_markup JSON DEFAULT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT bot FOREIGN KEY (bot) REFERENCES telegram_bot (id)
+  CONSTRAINT bot FOREIGN KEY (bot) REFERENCES telegram_bot (id),
+  UNIQUE INDEX layout_id (layout_id)
 )
   DEFAULT CHARACTER SET utf8
   COLLATE utf8_general_ci
