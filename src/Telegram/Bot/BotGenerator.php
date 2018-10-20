@@ -20,14 +20,21 @@ class BotGenerator
      */
     private $layoutRepository;
 
+    /**
+     * @var \App\Repository\Telegram\CallbackMessageRepository
+     */
+    private $callbackMessageRepository;
+
     // ########################################
 
     public function __construct(
-        \App\Telegram\Bot\BotGenerator\Settings\Factory $settingsFactory,
-        \App\Repository\Telegram\LayoutRepository       $layoutRepository
+        \App\Telegram\Bot\BotGenerator\Settings\Factory    $settingsFactory,
+        \App\Repository\Telegram\LayoutRepository          $layoutRepository,
+        \App\Repository\Telegram\CallbackMessageRepository $callbackMessageRepository
     ) {
-        $this->settingsFactory  = $settingsFactory;
-        $this->layoutRepository = $layoutRepository;
+        $this->settingsFactory           = $settingsFactory;
+        $this->layoutRepository          = $layoutRepository;
+        $this->callbackMessageRepository = $callbackMessageRepository;
     }
 
     // ########################################
@@ -41,9 +48,18 @@ class BotGenerator
         }
 
         foreach ($settings->getRelationships() as $relationship) {
+            $layout = $this->layoutRepository->find($relationship->getLayoutId());
+            if (is_null($layout)) {
+                throw new \Exception('Not found layout');
+            }
 
+            $this->callbackMessageRepository->create(
+                $bot,
+                $layout,
+                $relationship->getButtonId(),
+                $relationship->getAction()
+            );
         }
-
     }
 
     // ########################################

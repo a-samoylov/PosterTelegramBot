@@ -15,15 +15,9 @@ class Factory
     public function create(
         int $layoutId,
         int $buttonId,
-        string $action,
+        array $action,
         int $anotherId
     ): \App\Telegram\Bot\BotGenerator\Settings\Relationship {
-        if (!in_array($action, [
-            \App\Telegram\Bot\BotGenerator\Settings\Relationship::ACTION_OPEN_LAYOUT,
-            \App\Telegram\Bot\BotGenerator\Settings\Relationship::ACTION_EDIT_LAYOUT,
-        ])) {
-            throw new \App\Model\Exception\Validate(self::class, 'action', $action);
-        }
 
         //todo validate( check is exist data)
 

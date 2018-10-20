@@ -26,7 +26,7 @@ class Relationship
     private $buttonId;
 
     /**
-     * @var string
+     * @var array
      */
     private $action;
 
@@ -40,13 +40,13 @@ class Relationship
     /**
      * @param int    $layoutId
      * @param int    $buttonId
-     * @param string $action
+     * @param array  $action
      * @param int    $anotherId
      */
     public function __construct(
         int $layoutId,
         int $buttonId,
-        string $action,
+        array $action,
         int $anotherId
     ) {
         $this->layoutId  = $layoutId;
@@ -74,9 +74,9 @@ class Relationship
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getAction(): string
+    public function getAction(): array
     {
         return $this->action;
     }

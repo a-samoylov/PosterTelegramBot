@@ -22,4 +22,25 @@ class CallbackMessageRepository extends ServiceEntityRepository
     }
 
     // ########################################
+
+    public function create(
+        \App\Entity\Telegram\Bot    $bot,
+        \App\Entity\Telegram\Layout $layout,
+        int $buttonId,
+        array $action
+    ): CallbackMessage {
+        $callbackMessage = new CallbackMessage();
+
+        $callbackMessage->setBot($bot);
+        $callbackMessage->setLayout($layout);
+        $callbackMessage->setButtonId($buttonId);
+        $callbackMessage->setAction($action);
+
+        $this->getEntityManager()->persist($callbackMessage);
+        $this->getEntityManager()->flush($callbackMessage);
+
+        return $callbackMessage;
+    }
+
+    // ########################################
 }
