@@ -23,22 +23,16 @@ class LayoutRepository extends ServiceEntityRepository
 
     // ########################################
 
-    public function create(\App\Telegram\Bot\BotGenerator\Settings\Layout $settingsLayout): Layout {
+    public function create(
+        \App\Entity\Telegram\Bot                       $bot,
+        \App\Telegram\Bot\BotGenerator\Settings\Layout $settingsLayout
+    ): Layout {
         $layout = new Layout();
 
-        $layout->setBot($settingsLayout->getBot());
+        $layout->setBot($bot);
         $layout->setName($settingsLayout->getName());
         $layout->setText($settingsLayout->getText());
-
-        if ($settingsLayout->isHasReplyMarkupInlineKeyboard()) {
-
-            /** @var \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup $inlineKeyboard */
-            $inlineKeyboard = $settingsLayout->getReplyMarkup();
-            /*$layout->setReplyMarkup([
-                'type' => \App\Telegram\Bot\BotGenerator\Settings::TYPE_REPLY_INLINE_KEYBOARD_MARKUP;
-                'text' => $inlineKeyboard
-            ]);*/
-        }
+        $layout->setReplyMarkup($settingsLayout->getReplyMarkup());
 
         $this->getEntityManager()->persist($layout);
         $this->getEntityManager()->flush($layout);

@@ -82,22 +82,5 @@ class Layout
         $this->replyMarkup = $replyMarkup;
     }
 
-    // ----------------------------------------
-
-    public function isHasReplyMarkup(): bool
-    {
-        return is_null($this->replyMarkup);
-    }
-
-    public function isHasReplyMarkupInlineKeyboard(): bool
-    {
-        return $this->replyMarkup instanceof \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup;
-    }
-
-    public function isHasReplyMarkupReplyKeyboard(): bool
-    {
-        return $this->replyMarkup instanceof \App\Telegram\Model\Type\ReplyMarkup\ReplyKeyboardMarkup;
-    }
-
     // ########################################
 }

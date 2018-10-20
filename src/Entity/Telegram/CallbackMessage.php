@@ -3,6 +3,7 @@
 namespace App\Entity\Telegram;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\Table;
 
 /**
@@ -11,9 +12,6 @@ use Doctrine\ORM\Mapping\Table;
  */
 class CallbackMessage
 {
-    private const REGISTER_TYPE        = 0;
-    private const SAMPLE_ZNO_TEST_TYPE = 1;
-
     // ########################################
 
     /**
@@ -24,138 +22,28 @@ class CallbackMessage
     private $id;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @var \App\Entity\Telegram\Bot
+     * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Bot")
+     * @JoinColumn(name="bot", nullable=false, referencedColumnName="id")
      */
-    private $type;
+    private $bot;
 
     /**
-     * @ORM\Column(type="string", length=70, nullable=true)
+     * @var \App\Entity\Telegram\Layout
+     * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Layout")
+     * @JoinColumn(name="layout", nullable=false, referencedColumnName="id")
      */
-    private $name;
+    private $layout;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=false)
      */
-    private $messageText;
+    private $action;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $data;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createDate;
-
-    // ########################################
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    // ########################################
-
-    //todo setZNOType ...
-    /**
-     * @return int
-     */
-    public function getType(): int
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param int $type
-     */
-    public function setType(int $type): void
-    {
-        $this->type = $type;
-    }
-
-    // ########################################
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    // ########################################
-
-    /**
-     * @return string
-     */
-    public function getMessageText(): string
-    {
-        return $this->messageText;
-    }
-
-    /**
-     * @param string $messageText
-     */
-    public function setMessageText(string $messageText): void
-    {
-        $this->messageText = $messageText;
-    }
-
-    // ########################################
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param array $data
-     */
-    public function setData(array $data): void
-    {
-        $this->data = $data;
-    }
-
-    // ########################################
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreateDate(): \DateTime
-    {
-        return $this->createDate;
-    }
-
-    /**
-     * @param \DateTime $createDate
-     */
-    public function setCreateDate($createDate): void
-    {
-        $this->createDate = $createDate;
-    }
+    private $buttonId;
 
     // ########################################
 }

@@ -66,13 +66,14 @@ CREATE TABLE telegram_callback_message (
   ENGINE = InnoDB;
 
 CREATE TABLE telegram_send_callback_message (
-  id          INT AUTO_INCREMENT NOT NULL,
-  callback_id INT                NOT NULL,
-  answer_date DATETIME DEFAULT NULL,
-  send_date   DATETIME           NOT NULL,
-  INDEX callback_id (callback_id),
-  CONSTRAINT telegram_callback_message_id FOREIGN KEY (callback_id) REFERENCES telegram_callback_message (id),
-  PRIMARY KEY (id)
+  id        INT AUTO_INCREMENT NOT NULL,
+  bot       INT                NOT NULL,
+  layout    INT                NOT NULL,
+  button_id INT DEFAULT NULL,
+  action    LONGTEXT           NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_9BAB26C611F0411 FOREIGN KEY (bot) REFERENCES telegram_bot (id),
+  CONSTRAINT FK_9BAB26C63A3A6BE2 FOREIGN KEY (layout) REFERENCES telegram_layout (id)
 )
   DEFAULT CHARACTER SET utf8
   COLLATE utf8_general_ci
