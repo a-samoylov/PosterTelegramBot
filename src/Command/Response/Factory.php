@@ -8,8 +8,6 @@
 
 namespace App\Command\Response;
 
-use App\Command\Response;
-
 class Factory
 {
     // ########################################
@@ -21,9 +19,9 @@ class Factory
      *
      * @return \App\Command\Response
      */
-    public function create(bool $isSuccess = true, string $message = 'Success'): Response
+    public function create(bool $isSuccess = true, string $message = 'Success'): \App\Command\Response
     {
-        return new Response($isSuccess, $message);
+        return new \App\Command\Response($isSuccess, $message);
     }
 
     // ########################################

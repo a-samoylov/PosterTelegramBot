@@ -1,5 +1,5 @@
 services:
-    telegram.command.start:
+    telegram.command.process.message:
         alias: App\Command\Process\MessageCommands
-        public: true:
+        public: true
 

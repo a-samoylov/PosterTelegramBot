@@ -10,8 +10,8 @@ namespace App\Command;
 
 class ServiceResolver
 {
-    public const DEFAULT_COMMAND_SERVICE = 'telegram.command.default';
-    public const START_COMMAND           = 'telegram.command.start';
+    public const DEFAULT_COMMAND_SERVICE      = 'telegram.command.default';
+    public const SEND_MESSAGE_PROCESS_COMMAND = 'telegram.command.process.message';
 
     public const REGISTER_SUBJECT_STEP_COMMAND_SERVICE   = 'telegram.command.register.subjectstep';
     public const REGISTER_INTENSITY_STEP_COMMAND_SERVICE = 'telegram.command.register.intensitystep';
@@ -37,10 +37,7 @@ class ServiceResolver
     public function resolve($update): string
     {
         if ($update instanceof \App\Telegram\Model\Type\Update\MessageUpdate) {
-            $serviceName = $this->getServiceNameByMessageUpdate($update);
-            if (!is_null($serviceName)) {
-                return $serviceName;
-            }
+            return self::SEND_MESSAGE_PROCESS_COMMAND;
         }
 
         if ($update instanceof \App\Telegram\Model\Type\Update\CallbackQuery) {
@@ -57,23 +54,6 @@ class ServiceResolver
     }
 
     // ########################################
-
-    /**
-     * @param \App\Telegram\Model\Type\Update\MessageUpdate $update
-     *
-     * @return null|string
-     */
-    private function getServiceNameByMessageUpdate(\App\Telegram\Model\Type\Update\MessageUpdate $update): ?string
-    {
-        $userEntity = $this->userRepository->find($update->getMessage()->getChat()->getId());
-        if (is_null($userEntity)) {
-            return self::START_COMMAND;
-        }
-
-        return null;
-    }
-
-    // ----------------------------------------
 
     /**
      * @param \App\Telegram\Model\Type\Update\CallbackQuery $callbackQuery

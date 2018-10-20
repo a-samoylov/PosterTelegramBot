@@ -140,7 +140,7 @@ class Bot
      */
     public function getCommands()
     {
-        return (array)json_encode($this->commands);
+        return (array)json_decode($this->commands);
     }
 
     /**

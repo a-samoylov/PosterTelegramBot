@@ -27,7 +27,6 @@ class UserRepository extends ServiceEntityRepository
         $user = new \App\Entity\Telegram\User();
 
         $user->setChat($telegramChat);
-        $user->setRegisterStartStep();
 
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush($user);
@@ -42,9 +41,11 @@ class UserRepository extends ServiceEntityRepository
 
     public function findByChatId(\App\Entity\Telegram\Chat $chat): ?\App\Entity\Telegram\User
     {
-        return $this->createQueryBuilder('user')->andWhere('user.chat = :chat')->setParameter('chat',
-                                                                                              $chat)->getQuery()->getOneOrNullResult()
-            ;
+        return $this->createQueryBuilder('user')
+                    ->andWhere('user.chat = :chat')
+                    ->setParameter('chat', $chat)
+                    ->getQuery()
+                    ->getOneOrNullResult();
     }
 
     // ########################################

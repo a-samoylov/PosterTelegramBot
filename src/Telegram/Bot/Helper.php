@@ -40,9 +40,11 @@ class Helper
     // ########################################
 
     public function sendLayout(
-        \App\Entity\Telegram\Chat $chat,
+        \App\Entity\Telegram\User   $user,
         \App\Entity\Telegram\Layout $layout
     ) {
+        $sendMessageModel = $this->sendMessageFactory->create($user->getChat()->getId(), $layout->getText());
+        $sendMessageModel->send();
     }
 
     // ########################################

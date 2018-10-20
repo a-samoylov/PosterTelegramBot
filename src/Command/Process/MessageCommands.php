@@ -24,17 +24,23 @@ class MessageCommands extends \App\Command\BaseAbstract
      * @var \App\Repository\Telegram\LayoutRepository
      */
     private $layoutRepository;
+    /**
+     * @var \App\Telegram\Bot\Helper
+     */
+    private $helper;
 
     // ########################################
 
     public function __construct(
-        \App\Repository\UserRepository            $userRepository,
+        \App\Repository\Telegram\UserRepository   $userRepository,
         \App\Repository\Telegram\ChatRepository   $telegramChatRepository,
-        \App\Repository\Telegram\LayoutRepository $layoutRepository
+        \App\Repository\Telegram\LayoutRepository $layoutRepository,
+        \App\Telegram\Bot\Helper                  $helper
     ) {
         $this->userRepository         = $userRepository;
         $this->telegramChatRepository = $telegramChatRepository;
         $this->layoutRepository       = $layoutRepository;
+        $this->helper                 = $helper;
     }
 
     // ########################################
@@ -80,12 +86,12 @@ class MessageCommands extends \App\Command\BaseAbstract
         }
 
         $layoutId = $commands[$update->getMessage()->getText()];
-        $layout   = $this->layoutRepository->find(['layoutId' => $layoutId]);
+        $layout   = $this->layoutRepository->findOneBy(['layoutId' => $layoutId]);
         if (is_null($layout)) {
             throw new \Exception("Command layout not found. Command: {$update->getMessage()->getText()}");
         }
 
-
+        $this->helper->sendLayout($chatEntity, $layout);
     }
 
     // ########################################
