@@ -6,9 +6,11 @@ namespace App\Entity\Telegram;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\Table;
 
 /**
  * @ORM\Entity(repositoryClass="\App\Repository\Telegram\UserRepository")
+ * @Table(name="telegram_user")})
  */
 class User
 {
