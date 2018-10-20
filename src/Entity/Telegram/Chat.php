@@ -25,7 +25,7 @@ class Chat
     private $id;
 
     /**
-     * @ORM\Column(type="text", nullable=false, length=20)
+     * @ORM\Column(type="string", nullable=false, length=20)
      */
     private $type;
 

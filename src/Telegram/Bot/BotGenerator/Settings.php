@@ -22,6 +22,9 @@ class Settings
     /** @var \App\Telegram\Bot\BotGenerator\Settings\Relationship[] */
     private $relationships;
 
+    /** @var \App\Telegram\Bot\BotGenerator\Settings\Command[] */
+    private $commands;
+
     // ########################################
 
     /**
@@ -66,6 +69,24 @@ class Settings
     public function getRelationships(): array
     {
         return $this->relationships;
+    }
+
+    // ########################################
+
+    /**
+     * @return \App\Telegram\Bot\BotGenerator\Settings\Command[]
+     */
+    public function getCommands(): array
+    {
+        return $this->commands;
+    }
+
+    /**
+     * @param \App\Telegram\Bot\BotGenerator\Settings\Command $command
+     */
+    public function addCommand(\App\Telegram\Bot\BotGenerator\Settings\Command $command): void
+    {
+        $this->commands[] = $command;
     }
 
     // ########################################

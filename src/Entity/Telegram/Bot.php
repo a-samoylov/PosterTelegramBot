@@ -40,6 +40,11 @@ class Bot
      */
     private $settings;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $commands;
+
     // ########################################
 
     /**
@@ -128,6 +133,32 @@ class Bot
     public function setSettings(array $settings): void
     {
         $this->settings = (array)json_encode($settings);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCommands()
+    {
+        return (array)json_encode($this->commands);
+    }
+
+    /**
+     * @param string $name
+     * @param int    $layoutId
+     */
+    public function addCommand(string $name, int $layoutId): void
+    {
+        $commands = (array)json_decode($this->commands);
+        $commands[$name] = $layoutId;
+        $this->commands = json_encode($commands);
+    }
+
+    public function removeCommand(string $name)
+    {
+        $commands = (array)json_decode($this->commands);
+        unset($commands[$name]);
+        $this->commands = json_encode($commands);
     }
 
     // ########################################

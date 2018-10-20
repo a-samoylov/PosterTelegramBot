@@ -20,14 +20,21 @@ class Factory
      */
     private $relationshipFactory;
 
+    /**
+     * @var \App\Telegram\Bot\BotGenerator\Settings\Command\Factory
+     */
+    private $commandFactory;
+
     // ########################################
 
     public function __construct(
         \App\Telegram\Bot\BotGenerator\Settings\Layout\Factory       $layoutFactory,
-        \App\Telegram\Bot\BotGenerator\Settings\Relationship\Factory $relationshipFactory
+        \App\Telegram\Bot\BotGenerator\Settings\Relationship\Factory $relationshipFactory,
+        \App\Telegram\Bot\BotGenerator\Settings\Command\Factory      $commandFactory
     ) {
         $this->layoutFactory       = $layoutFactory;
         $this->relationshipFactory = $relationshipFactory;
+        $this->commandFactory      = $commandFactory;
     }
 
     // ########################################
@@ -39,8 +46,9 @@ class Factory
             throw new \App\Model\Exception\Validate(self::class, 'layouts', $data);
         }
 
-        $layoutsData   = $data['layouts'];
+        $layoutsData       = $data['layouts'];
         $relationshipsData = $data['relationship'];
+        $commandsData      = $data['commands'];
         foreach ($layoutsData as $layoutData) {
             if (!isset($layoutData['name']) || !is_string($layoutData['name'])) {
                 throw new \App\Model\Exception\Validate(self::class, 'name', $data);
@@ -70,6 +78,10 @@ class Factory
                 $relationshipData['action'],
                 $relationshipData['another_layout_id']
             ));
+        }
+
+        foreach ($commandsData as $commandData) {
+            $result->addCommand($this->commandFactory->create($commandData['name'], $commandData['layout_id']));
         }
 
         return $result;
