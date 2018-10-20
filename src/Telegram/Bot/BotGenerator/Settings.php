@@ -16,6 +16,9 @@ class Settings
     /** @var \App\Telegram\Bot\BotGenerator\Settings\Layout[] */
     private $layouts;
 
+    /** @var \App\Telegram\Bot\BotGenerator\Settings\Relationship[] */
+    private $relationships;
+
     // ########################################
 
     /**
@@ -32,6 +35,24 @@ class Settings
     public function addLayout(\App\Telegram\Bot\BotGenerator\Settings\Layout $layout): void
     {
         $this->layouts[] = $layout;
+    }
+
+    // ########################################
+
+    /**
+     * @param \App\Telegram\Bot\BotGenerator\Settings\Relationship $relationship
+     */
+    public function addRelationship(\App\Telegram\Bot\BotGenerator\Settings\Relationship $relationship): void
+    {
+        $this->relationships[] = $relationship;
+    }
+
+    /**
+     * @return \App\Telegram\Bot\BotGenerator\Settings\Relationship[]
+     */
+    public function getRelationships(): array
+    {
+        return $this->relationships;
     }
 
     // ########################################

@@ -51,7 +51,10 @@ class Factory
             foreach ($replyMarkup['buttons'] as $buttonsRow) {
                 $row = [];
                 foreach ($buttonsRow as $inlineKeyboardButtonData) {
-                    $row[] = $this->inlineKeyboardButtonFactory->create($inlineKeyboardButtonData['text'], '');
+                    $row[] = $this->inlineKeyboardButtonFactory->create($inlineKeyboardButtonData['text'], json_encode([
+                        'action'    => $inlineKeyboardButtonData['action'],
+                        'layout_id' => $inlineKeyboardButtonData['layout_id'],
+                    ]));
                 }
 
                 !empty($row) && $rowInlineKeyboard[] = $row;

@@ -15,12 +15,19 @@ class Factory
      */
     private $layoutFactory;
 
+    /**
+     * @var \App\Telegram\Bot\BotGenerator\Settings\Relationship\Factory
+     */
+    private $relationshipFactory;
+
     // ########################################
 
     public function __construct(
-        \App\Telegram\Bot\BotGenerator\Settings\Layout\Factory $layoutFactory
+        \App\Telegram\Bot\BotGenerator\Settings\Layout\Factory       $layoutFactory,
+        \App\Telegram\Bot\BotGenerator\Settings\Relationship\Factory $relationshipFactory
     ) {
-        $this->layoutFactory    = $layoutFactory;
+        $this->layoutFactory       = $layoutFactory;
+        $this->relationshipFactory = $relationshipFactory;
     }
 
     // ########################################
@@ -32,7 +39,8 @@ class Factory
             throw new \App\Model\Exception\Validate(self::class, 'layouts', $data);
         }
 
-        $layoutsData = $data['layouts'];
+        $layoutsData   = $data['layouts'];
+        $relationshipsData = $data['relationship'];
         foreach ($layoutsData as $layoutData) {
             if (!isset($layoutData['name']) || !is_string($layoutData['name'])) {
                 throw new \App\Model\Exception\Validate(self::class, 'name', $data);
@@ -53,6 +61,16 @@ class Factory
 
         foreach ($layoutsData as $layoutData) {
             $result->addLayout($this->layoutFactory->create($bot, $layoutData));
+        }
+
+        foreach ($relationshipsData as $relationshipData) {
+            $result->addRelationship($this->relationshipFactory->create(
+                $bot,
+                $relationshipData['layout_id'],
+                $relationshipData['button_id'],
+                $relationshipData['action'],
+                $relationshipData['another_layout_id']
+            ));
         }
 
         return $result;

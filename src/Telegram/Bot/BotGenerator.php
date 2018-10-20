@@ -37,13 +37,10 @@ class BotGenerator
         $settings = $this->settingsFactory->create($bot);
 
         foreach ($settings->getLayouts() as $layout) {
-            $this->layoutRepository->create(
-                $layout->getBot(),
-                $layout->getName(),
-                $layout->getText(),
-                $layout->getReplyMarkup()
-            );
+            $this->layoutRepository->create($layout);
         }
+
+
     }
 
     // ########################################
