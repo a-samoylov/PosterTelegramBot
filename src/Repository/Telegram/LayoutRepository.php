@@ -30,7 +30,7 @@ class LayoutRepository extends ServiceEntityRepository
         $layout = new Layout();
 
         $layout->setBot($bot);
-        $layout->setLayoutId($layout->getId());
+        $layout->setLayoutId($settingsLayout->getId());
         $layout->setName($settingsLayout->getName());
         $layout->setText($settingsLayout->getText());
         $layout->setReplyMarkup($settingsLayout->getReplyMarkup());

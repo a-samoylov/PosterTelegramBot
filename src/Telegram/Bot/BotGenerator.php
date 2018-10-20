@@ -48,7 +48,7 @@ class BotGenerator
         }
 
         foreach ($settings->getRelationships() as $relationship) {
-            $layout = $this->layoutRepository->find($relationship->getLayoutId());
+            $layout = $this->layoutRepository->findOneBy(['layoutId' => $relationship->getLayoutId()]);
             if (is_null($layout)) {
                 throw new \Exception('Not found layout');
             }

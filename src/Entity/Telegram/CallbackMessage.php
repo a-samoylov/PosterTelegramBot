@@ -88,17 +88,17 @@ class CallbackMessage
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
 
     /**
-     * @param mixed $action
+     * @param string $action
      */
-    public function setAction($action): void
+    public function setAction(string $action): void
     {
         $this->action = $action;
     }

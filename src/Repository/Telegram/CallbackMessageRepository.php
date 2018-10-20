@@ -34,7 +34,7 @@ class CallbackMessageRepository extends ServiceEntityRepository
         $callbackMessage->setBot($bot);
         $callbackMessage->setLayout($layout);
         $callbackMessage->setButtonId($buttonId);
-        $callbackMessage->setAction($action);
+        $callbackMessage->setAction(json_encode($action));
 
         $this->getEntityManager()->persist($callbackMessage);
         $this->getEntityManager()->flush($callbackMessage);
