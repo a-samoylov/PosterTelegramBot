@@ -13,9 +13,9 @@ class Menu extends Api
         return $this->sendRequest($url);
     }
 
-    public function getProducts(int $categoryId)
+    public function getProducts()
     {
-        $url = "https://demo.joinposter.com/api/menu.getProducts?token={$this->accessToken}&category_id={$categoryId}";
+        $url = "https://demo.joinposter.com/api/menu.getProducts?token={$this->accessToken}";
 
         return $this->sendRequest($url);
     }

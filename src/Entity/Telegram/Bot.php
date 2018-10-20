@@ -36,7 +36,7 @@ class Bot
     private $accessKey;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $settings;
 

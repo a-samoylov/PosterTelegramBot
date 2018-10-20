@@ -39,7 +39,7 @@ class CallbackMessage
     private $messageText;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $data;
 

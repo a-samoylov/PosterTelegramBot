@@ -44,6 +44,7 @@ class Auth
 
         $data = json_decode(curl_exec($ch), true);
         curl_close($ch);
+
         return $data['new_access_token'];
     }
 

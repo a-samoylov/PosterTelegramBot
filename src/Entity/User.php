@@ -65,6 +65,12 @@ class User
      */
     private $currentLayout;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @var string
+     */
+    private $posterMenu;
+
     // ########################################
 
     /**
@@ -209,6 +215,16 @@ class User
     public function setCurrentLayout(int $currentLayout): void
     {
         $this->currentLayout = $currentLayout;
+    }
+
+    public function getPosterMenu(): \App\Entity\User\Poster\Menu
+    {
+        return unserialize($this->posterMenu);
+    }
+
+    public function setPosterMenu(\App\Entity\User\Poster\Menu $posterMenu): void
+    {
+        $this->posterMenu = serialize($posterMenu);
     }
 
     // ########################################
