@@ -1,0 +1,293 @@
+{
+    "commands": [
+        {
+            "name": "\/start",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 1
+                    }
+                }
+            ]
+        }
+    ],
+    "relationship_inline": [
+        {
+            "layout_id": 6,
+            "button_id": 1,
+            "action": [
+                {
+                    "command": "add_item",
+                    "params": {
+                        "layout_id": 6,
+                        "item_id": 7
+                    }
+                }
+            ]
+        }
+    ],
+    "relationship_keyboard": [
+        {
+            "layout_id": 1,
+            "button_text": "Показать меню",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 2
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 2,
+            "button_text": "Напитки",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 3
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 2,
+            "button_text": "Салаты",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 4
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 2,
+            "button_text": "Горячие блюда",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 5
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 2,
+            "button_text": "Главное меню",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 1
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 3,
+            "button_text": "< Назад",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 2
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 4,
+            "button_text": "< Назад",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 2
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 5,
+            "button_text": "< Назад",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 2
+                    }
+                }
+            ]
+        },
+        {
+            "layout_id": 5,
+            "button_text": "Американо (30.00)",
+            "action": [
+                {
+                    "command": "open_layout",
+                    "params": {
+                        "layout_id": 6
+                    }
+                }
+            ]
+        }
+    ],
+    "layouts": [
+        {
+            "id": 1,
+            "name": "Welcome",
+            "text": "Добро пожаловать!",
+            "reply_markup": {
+                "type": "keyboard_markup",
+                "buttons": [
+                    [
+                        {
+                            "id": 1,
+                            "text": "Показать меню"
+                        },
+                        {
+                            "id": 2,
+                            "text": "Забронировать столик"
+                        }
+                    ]
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "name": "Select category",
+            "text": "Выберите категорию",
+            "reply_markup": {
+                "type": "keyboard_markup",
+                "buttons": [
+                    [
+                        {
+                            "text": "Главное меню"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Напитки"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Салаты"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Горячие блюда"
+                        }
+                    ]
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "name": "Select category",
+            "text": "Выберите пункт меню",
+            "reply_markup": {
+                "type": "keyboard_markup",
+                "buttons": [
+                    [
+                        {
+                            "text": "< Назад"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Американо (30.00)"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Borjomi (30.00)"
+                        }
+                    ]
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "name": "Select category",
+            "text": "Выберите пункт меню",
+            "reply_markup": {
+                "type": "keyboard_markup",
+                "buttons": [
+                    [
+                        {
+                            "text": "< Назад"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Цезарь (50.00)"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Оливье (30.00)"
+                        }
+                    ]
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "name": "Select category",
+            "text": "Выберите пункт меню",
+            "reply_markup": {
+                "type": "keyboard_markup",
+                "buttons": [
+                    [
+                        {
+                            "text": "< Назад"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Стейк из телятины (150.00)"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Макароны (30.00)"
+                        }
+                    ]
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "name": "Select category",
+            "text": "Американо",
+            "reply_markup": {
+                "type": "inline_keyboard_markup",
+                "buttons": [
+                    [
+                        {
+                            "id": 1,
+                            "text": "-"
+                        },
+                        {
+                            "id": 2,
+                            "text": "+"
+                        }
+                    ],
+                    [
+                        {
+                            "id": 3,
+                            "text": "Добавить в корзину"
+                        }
+                    ]
+                ]
+            }
+        }
+    ]
+}
