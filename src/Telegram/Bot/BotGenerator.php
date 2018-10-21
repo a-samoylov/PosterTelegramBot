@@ -33,10 +33,10 @@ class BotGenerator
     // ########################################
 
     public function __construct(
-        \App\Telegram\Bot\BotGenerator\Settings\Factory    $settingsFactory,
-        \App\Repository\Telegram\LayoutRepository          $layoutRepository,
+        \App\Telegram\Bot\BotGenerator\Settings\Factory $settingsFactory,
+        \App\Repository\Telegram\LayoutRepository $layoutRepository,
         \App\Repository\Telegram\CallbackMessageRepository $callbackMessageRepository,
-        \App\Repository\Telegram\BotRepository             $botRepository
+        \App\Repository\Telegram\BotRepository $botRepository
     ) {
         $this->settingsFactory           = $settingsFactory;
         $this->layoutRepository          = $layoutRepository;
@@ -48,6 +48,8 @@ class BotGenerator
 
     public function generate(\App\Entity\Telegram\Bot $bot)
     {
+        $this->clearOldLayouts($bot);
+
         $settings = $this->settingsFactory->create($bot);
 
         foreach ($settings->getLayouts() as $layout) {
@@ -60,12 +62,7 @@ class BotGenerator
                 throw new \Exception('Not found layout');
             }
 
-            $this->callbackMessageRepository->create(
-                $bot,
-                $layout,
-                $relationship->getButtonId(),
-                $relationship->getAction()
-            );
+            $this->callbackMessageRepository->create($bot, $layout, $relationship->getButtonId(), $relationship->getAction());
         }
 
         foreach ($settings->getCommands() as $command) {
@@ -77,14 +74,15 @@ class BotGenerator
 
     // ########################################
 
-    private function clearOldLayouts()
+    private function clearOldLayouts(\App\Entity\Telegram\Bot $bot)
     {
-        //todo
-    }
+        $layouts = $bot->getLayouts();
 
-    private function clearOldRelationships()
-    {
-        //todo
+        foreach ($layouts as $layout) {
+            $bot->removeLayout($layout);
+        }
+
+        $this->botRepository->update($bot);
     }
 
     private function clearOldCommands(\App\Entity\Telegram\Bot $bot)

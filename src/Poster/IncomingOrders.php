@@ -6,7 +6,7 @@ namespace App\Poster;
 
 class IncomingOrders extends Api
 {
-    public function createIncomingOrder(int $spotId, string $phone, array $products)
+    public function createIncomingOrder(int $spotId, string $phone, array $products, ?int $paymentSum)
     {
         $url = "https://{$this->account}.joinposter.com/api/incomingOrders.createIncomingOrder?token={$this->accessToken}";
 
@@ -15,6 +15,14 @@ class IncomingOrders extends Api
             'phone'    => $phone,
             'products' => $products,
         ];
+
+        if (!is_null($paymentSum)) {
+            $params['payment'] = [
+                'type'     => 1,
+                'sum'      => $paymentSum,
+                'currency' => 'UAH',
+            ];
+        }
 
         return $this->sendRequest($url, 'post', $params);
     }

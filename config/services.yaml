@@ -37,7 +37,7 @@ services:
         arguments:
             $baseDir: '%kernel.project_dir%'
 
-    App\Poster\Auth:
+    App\Poster\Config:
         arguments:
             $applicationId: 271
             $applicationSecret: 18a8d1b2da60a592a6f22751b61c0b39
