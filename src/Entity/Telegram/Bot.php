@@ -154,14 +154,10 @@ class Bot
         return (array)json_decode($this->commands);
     }
 
-    /**
-     * @param string $name
-     * @param int    $layoutId
-     */
-    public function addCommand(string $name, int $layoutId): void
+    public function addCommand(string $name, array $action): void
     {
         $commands        = (array)json_decode($this->commands);
-        $commands[$name] = $layoutId;
+        $commands[$name] = $action;
         $this->commands  = json_encode($commands);
     }
 

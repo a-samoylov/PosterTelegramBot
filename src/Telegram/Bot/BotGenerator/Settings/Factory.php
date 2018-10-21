@@ -88,7 +88,7 @@ class Factory
         }
 
         foreach ($commandsData as $commandData) {
-            $result->addCommand($this->commandFactory->create($commandData['name'], $commandData['layout_id']));
+            $result->addCommand($this->commandFactory->create($commandData['name'], $commandData['action']));
         }
 
         return $result;

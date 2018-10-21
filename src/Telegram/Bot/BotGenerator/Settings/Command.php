@@ -15,19 +15,15 @@ class Command
     /** @var string */
     private $name;
 
-    /** @var integer */
-    private $layoutId;
+    /** @var array */
+    private $action;
 
     // ########################################
 
-    /**
-     * @param string $name
-     * @param int    $layoutId
-     */
-    public function __construct(string $name, int $layoutId)
+    public function __construct(string $name, array $action)
     {
-        $this->name     = $name;
-        $this->layoutId = $layoutId;
+        $this->name   = $name;
+        $this->action = $action;
     }
 
     // ########################################
@@ -40,12 +36,9 @@ class Command
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
-    public function getLayoutId(): int
+    public function getAction(): array
     {
-        return $this->layoutId;
+        return $this->action;
     }
 
     // ########################################
