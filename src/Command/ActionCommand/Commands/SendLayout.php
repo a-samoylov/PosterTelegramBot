@@ -88,9 +88,9 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
                     $row = [];
                     foreach ($buttonsRow as $inlineButton) {
                         $row[] = $this->inlineKeyboardButtonFactory->create($inlineButton['text'], json_encode([
-                                                                                                                   'lt'  => $layout->getId(),
-                                                                                                                   'btn' => $inlineButton['id']
-                                                                                                               ]));
+                            'lt'  => $layout->getId(),
+                            'btn' => $inlineButton['id']
+                        ]));
                     }
 
                     $inlineKeyboardMarkup->addRowInlineKeyboard($row);

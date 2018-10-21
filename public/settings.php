@@ -7,22 +7,37 @@
  */
 
 $settings = [
-    'commands' => [
+    'commands'            => [
         [
             'name'   => '/start',
             'action' => [
-                'command' => 'open_layout',
-                'params'  => [
-                    'layout_id' => 2
+                [
+                    'command' => 'open_layout',
+                    'params'  => [
+                        'layout_id' => 1
+                    ]
                 ]
             ]
         ]
     ],
-
-    'relationship' => [
+    'relationship_inline' => [
         [
             'layout_id'         => 1,
             'button_id'         => 1,
+            'action'            => [
+                [
+                    'command' => 'edit_layout',
+                    'params' => [
+                        'layout_id' => 3
+                    ]
+                ]
+            ]
+        ]
+    ],
+    'relationship_keyboard' => [
+        [
+            'layout_id'         => 1,
+            'button_text'       => 'Текст',
             'action'            => [
                 [
                     'command' => 'open_layout',
@@ -51,6 +66,11 @@ $settings = [
             'id' => 2,
             'name' => 'Screen #2',
             'text' => 'Screen #2'
+        ],
+        [
+            'id' => 3,
+            'name' => 'Screen #3',
+            'text' => 'Screen #3'
         ]
     ]
 ];
