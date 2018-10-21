@@ -12,9 +12,9 @@ class Factory
 {
     // ########################################
 
-    public function create(string $name, int $layoutId): \App\Telegram\Bot\BotGenerator\Settings\Command
+    public function create(string $name, array $action): \App\Telegram\Bot\BotGenerator\Settings\Command
     {
-        return new \App\Telegram\Bot\BotGenerator\Settings\Command($name, $layoutId);
+        return new \App\Telegram\Bot\BotGenerator\Settings\Command($name, $action);
     }
 
     // ########################################

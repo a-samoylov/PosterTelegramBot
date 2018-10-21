@@ -86,7 +86,7 @@ class BotGenerator
         }
 
         foreach ($settings->getCommands() as $command) {
-            $bot->addCommand($command->getName(), $command->getLayoutId());
+            $bot->addCommand($command->getName(), $command->getAction());
         }
 
         $this->botRepository->update($bot);

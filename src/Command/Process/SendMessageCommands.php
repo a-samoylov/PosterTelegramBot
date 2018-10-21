@@ -29,18 +29,30 @@ class SendMessageCommands extends \App\Command\BaseAbstract
      */
     private $helper;
 
+    private $menuMessageRepository;
+
+    private $commandProcessor;
+
+    private $actionFactory;
+
     // ########################################
 
     public function __construct(
-        \App\Repository\Telegram\UserRepository   $userRepository,
-        \App\Repository\Telegram\ChatRepository   $telegramChatRepository,
+        \App\Repository\Telegram\UserRepository $userRepository,
+        \App\Repository\Telegram\ChatRepository $telegramChatRepository,
         \App\Repository\Telegram\LayoutRepository $layoutRepository,
-        \App\Telegram\Bot\Helper                  $helper
+        \App\Telegram\Bot\Helper $helper,
+        \App\Repository\Telegram\MenuMessageRepository $menuMessageRepository,
+        \App\Command\ActionCommand\Processor $commandProcessor,
+        \App\Command\ActionCommand\Action\Factory $actionFactory
     ) {
         $this->userRepository         = $userRepository;
         $this->telegramChatRepository = $telegramChatRepository;
         $this->layoutRepository       = $layoutRepository;
         $this->helper                 = $helper;
+        $this->menuMessageRepository  = $menuMessageRepository;
+        $this->commandProcessor       = $commandProcessor;
+        $this->actionFactory          = $actionFactory;
     }
 
     // ########################################
@@ -66,13 +78,8 @@ class SendMessageCommands extends \App\Command\BaseAbstract
 
         $chatEntity = $this->telegramChatRepository->find($updateChat->getId());
         if (is_null($chatEntity)) {
-            $chatEntity = $this->telegramChatRepository->create(
-                $updateChat->getId(),
-                $updateChat->getType(),
-                $updateChat->getUsername(),
-                $updateChat->getFirstName(),
-                $updateChat->getLastName()
-            );
+            $chatEntity = $this->telegramChatRepository->create($updateChat->getId(), $updateChat->getType(), $updateChat->getUsername(),
+                                                                $updateChat->getFirstName(), $updateChat->getLastName());
         }
 
         $userEntity = $this->userRepository->findByChat($chatEntity);
@@ -80,20 +87,36 @@ class SendMessageCommands extends \App\Command\BaseAbstract
             $userEntity = $this->userRepository->create($chatEntity);
         }
 
+        $actions = [];
+
         $commands = $this->getBot()->getCommands();
-        if (!isset($commands[$update->getMessage()->getText()])) {
-            return;
+
+        $text = $update->getMessage()->getText();
+
+        if (isset($commands[$text])) {
+            $actions[] = $commands[$text];
+        } else {
+            $sendMessage = $this->menuMessageRepository->findOneBy([
+               'bot'        => $this->getBot()->getId(),
+               'layout'     => $userEntity->getCurrentLayout(),
+               'buttonText' => $text,
+           ]);
+
+            if (is_null($sendMessage)) {
+                throw new \Exception("Action not found. Command: {$update->getMessage()->getText()}");
+            }
+
+            $actions = $sendMessage->getActions();
         }
 
-        $layoutId = $commands[$update->getMessage()->getText()];
-        $layout   = $this->layoutRepository->findOneBy(['layoutId' => $layoutId]);
-        if (is_null($layout)) {
-            throw new \Exception("Command layout not found. Command: {$update->getMessage()->getText()}");
+        foreach ($actions as $actionData) {
+            try {
+                $this->commandProcessor->process($userEntity, $this->actionFactory->create($actionData));
+            } catch (\Exception $exception) {
+                // todo log
+                break;
+            }
         }
-
-        $this->helper->sendLayout($userEntity, $layout);
-
-        //todo commands + menu
     }
 
     // ########################################
