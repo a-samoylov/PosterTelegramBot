@@ -8,7 +8,7 @@
 
 namespace App\Telegram\Bot\BotGenerator\Settings;
 
-class Relationship
+class RelationshipInline
 {
     public const ACTION_OPEN_LAYOUT = 'open_layout';
     public const ACTION_EDIT_LAYOUT = 'edit_layout';

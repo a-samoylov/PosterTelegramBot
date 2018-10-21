@@ -25,6 +25,8 @@ class BotGenerator
      */
     private $callbackMessageRepository;
 
+    private $menuMessageRepository;
+
     /**
      * @var \App\Repository\Telegram\BotRepository
      */
@@ -36,11 +38,13 @@ class BotGenerator
         \App\Telegram\Bot\BotGenerator\Settings\Factory $settingsFactory,
         \App\Repository\Telegram\LayoutRepository $layoutRepository,
         \App\Repository\Telegram\CallbackMessageRepository $callbackMessageRepository,
+        \App\Repository\Telegram\MenuMessageRepository $menuMessageRepository,
         \App\Repository\Telegram\BotRepository $botRepository
     ) {
         $this->settingsFactory           = $settingsFactory;
         $this->layoutRepository          = $layoutRepository;
         $this->callbackMessageRepository = $callbackMessageRepository;
+        $this->menuMessageRepository     = $menuMessageRepository;
         $this->botRepository             = $botRepository;
     }
 
@@ -48,7 +52,14 @@ class BotGenerator
 
     public function generate(\App\Entity\Telegram\Bot $bot)
     {
-        $this->clearOldLayouts($bot);
+        $layouts = $bot->getLayouts();
+        foreach ($layouts as $layout) {
+            $bot->removeLayout($layout);
+        }
+
+        $bot->removeCommands();
+
+        $this->botRepository->update($bot);
 
         $settings = $this->settingsFactory->create($bot);
 
@@ -56,7 +67,7 @@ class BotGenerator
             $this->layoutRepository->create($bot, $layout);
         }
 
-        foreach ($settings->getRelationships() as $relationship) {
+        foreach ($settings->getRelationshipsInline() as $relationship) {
             $layout = $this->layoutRepository->findOneBy(['layoutId' => $relationship->getLayoutId()]);
             if (is_null($layout)) {
                 throw new \Exception('Not found layout');
@@ -65,29 +76,19 @@ class BotGenerator
             $this->callbackMessageRepository->create($bot, $layout, $relationship->getButtonId(), $relationship->getAction());
         }
 
+        foreach ($settings->getRelationshipsKeyboard() as $relationship) {
+            $layout = $this->layoutRepository->findOneBy(['layoutId' => $relationship->getLayoutId()]);
+            if (is_null($layout)) {
+                throw new \Exception('Not found layout');
+            }
+
+            $this->menuMessageRepository->create($bot, $layout, $relationship->getButtonText(), $relationship->getAction());
+        }
+
         foreach ($settings->getCommands() as $command) {
             $bot->addCommand($command->getName(), $command->getLayoutId());
         }
 
-        $this->botRepository->update($bot);
-    }
-
-    // ########################################
-
-    private function clearOldLayouts(\App\Entity\Telegram\Bot $bot)
-    {
-        $layouts = $bot->getLayouts();
-
-        foreach ($layouts as $layout) {
-            $bot->removeLayout($layout);
-        }
-
-        $this->botRepository->update($bot);
-    }
-
-    private function clearOldCommands(\App\Entity\Telegram\Bot $bot)
-    {
-        $bot->removeCommands();
         $this->botRepository->update($bot);
     }
 

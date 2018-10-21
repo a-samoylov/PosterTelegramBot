@@ -16,9 +16,14 @@ class Factory
     private $layoutFactory;
 
     /**
-     * @var \App\Telegram\Bot\BotGenerator\Settings\Relationship\Factory
+     * @var \App\Telegram\Bot\BotGenerator\Settings\RelationshipInline\Factory
      */
-    private $relationshipFactory;
+    private $relationshipInlineFactory;
+
+    /**
+     * @var \App\Telegram\Bot\BotGenerator\Settings\RelationshipKeyboard\Factory
+     */
+    private $relationshipKeyboardFactory;
 
     /**
      * @var \App\Telegram\Bot\BotGenerator\Settings\Command\Factory
@@ -28,13 +33,15 @@ class Factory
     // ########################################
 
     public function __construct(
-        \App\Telegram\Bot\BotGenerator\Settings\Layout\Factory       $layoutFactory,
-        \App\Telegram\Bot\BotGenerator\Settings\Relationship\Factory $relationshipFactory,
-        \App\Telegram\Bot\BotGenerator\Settings\Command\Factory      $commandFactory
+        \App\Telegram\Bot\BotGenerator\Settings\Layout\Factory $layoutFactory,
+        \App\Telegram\Bot\BotGenerator\Settings\RelationshipInline\Factory $relationshipInlineFactory,
+        \App\Telegram\Bot\BotGenerator\Settings\RelationshipKeyboard\Factory $relationshipKeyboardFactory,
+        \App\Telegram\Bot\BotGenerator\Settings\Command\Factory $commandFactory
     ) {
-        $this->layoutFactory       = $layoutFactory;
-        $this->relationshipFactory = $relationshipFactory;
-        $this->commandFactory      = $commandFactory;
+        $this->layoutFactory               = $layoutFactory;
+        $this->relationshipInlineFactory   = $relationshipInlineFactory;
+        $this->relationshipKeyboardFactory = $relationshipKeyboardFactory;
+        $this->commandFactory              = $commandFactory;
     }
 
     // ########################################
@@ -46,9 +53,10 @@ class Factory
             throw new \App\Model\Exception\Validate(self::class, 'layouts', $data);
         }
 
-        $layoutsData       = $data['layouts'];
-        $relationshipsData = $data['relationship'];
-        $commandsData      = $data['commands'];
+        $layoutsData               = $data['layouts'];
+        $relationshipsInlineData   = $data['relationship_inline'];
+        $relationshipsKeyboardData = $data['relationship_keyboard'];
+        $commandsData              = $data['commands'];
         foreach ($layoutsData as $layoutData) {
             if (!isset($layoutData['name']) || !is_string($layoutData['name'])) {
                 throw new \App\Model\Exception\Validate(self::class, 'name', $data);
@@ -67,12 +75,16 @@ class Factory
             $result->addLayout($this->layoutFactory->create($layoutData));
         }
 
-        foreach ($relationshipsData as $relationshipData) {
-            $result->addRelationship($this->relationshipFactory->create(
-                $relationshipData['layout_id'],
-                $relationshipData['button_id'],
-                $relationshipData['action']
-            ));
+        foreach ($relationshipsInlineData as $relationshipData) {
+            $result->addRelationshipInline($this->relationshipInlineFactory->create($relationshipData['layout_id'],
+                                                                                    $relationshipData['button_id'],
+                                                                                    $relationshipData['action']));
+        }
+
+        foreach ($relationshipsKeyboardData as $relationshipData) {
+            $result->addRelationshipKeyboard($this->relationshipKeyboardFactory->create($relationshipData['layout_id'],
+                                                                                        $relationshipData['button_text'],
+                                                                                        $relationshipData['action']));
         }
 
         foreach ($commandsData as $commandData) {

@@ -19,8 +19,11 @@ class Settings
     /** @var \App\Telegram\Bot\BotGenerator\Settings\Layout[] */
     private $layouts;
 
-    /** @var \App\Telegram\Bot\BotGenerator\Settings\Relationship[] */
-    private $relationships;
+    /** @var \App\Telegram\Bot\BotGenerator\Settings\RelationshipInline[] */
+    private $relationshipsInline;
+
+    /** @var \App\Telegram\Bot\BotGenerator\Settings\RelationshipKeyboard[] */
+    private $relationshipsKeyboard;
 
     /** @var \App\Telegram\Bot\BotGenerator\Settings\Command[] */
     private $commands;
@@ -56,19 +59,32 @@ class Settings
     // ########################################
 
     /**
-     * @param \App\Telegram\Bot\BotGenerator\Settings\Relationship $relationship
+     * @param \App\Telegram\Bot\BotGenerator\Settings\RelationshipInline $relationship
      */
-    public function addRelationship(\App\Telegram\Bot\BotGenerator\Settings\Relationship $relationship): void
+    public function addRelationshipInline(\App\Telegram\Bot\BotGenerator\Settings\RelationshipInline $relationship): void
     {
-        $this->relationships[] = $relationship;
+        $this->relationshipsInline[] = $relationship;
     }
 
     /**
-     * @return \App\Telegram\Bot\BotGenerator\Settings\Relationship[]
+     * @return \App\Telegram\Bot\BotGenerator\Settings\RelationshipInline[]
      */
-    public function getRelationships(): array
+    public function getRelationshipsInline(): array
     {
-        return $this->relationships;
+        return $this->relationshipsInline;
+    }
+
+    public function addRelationshipKeyboard(\App\Telegram\Bot\BotGenerator\Settings\RelationshipKeyboard $relationship): void
+    {
+        $this->relationshipsKeyboard[] = $relationship;
+    }
+
+    /**
+     * @return \App\Telegram\Bot\BotGenerator\Settings\RelationshipKeyboard[]
+     */
+    public function getRelationshipsKeyboard(): array
+    {
+        return $this->relationshipsKeyboard;
     }
 
     // ########################################
