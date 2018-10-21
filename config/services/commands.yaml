@@ -10,3 +10,8 @@ services:
     telegram.command.process.callback.message:
         alias: App\Command\Process\CallbackMessageCommands
         public: true
+
+    #action commands
+    telegram.action.command.send.message:
+        alias: App\Command\ActionCommand\Commands\SendLayout
+        public: true

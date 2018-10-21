@@ -53,6 +53,7 @@ abstract class BaseAbstract implements AwareInterface
     }
 
     // ########################################
+
     /**
      * @return string|bool
      */

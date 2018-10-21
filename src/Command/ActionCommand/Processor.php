@@ -16,11 +16,6 @@ class Processor
     private $container;
 
     /**
-     * @var \App\Command\Response\Factory
-     */
-    private $responseFactory;
-
-    /**
      * @var \App\Command\ActionCommand\Resolver
      */
     private $resolver;
@@ -29,11 +24,9 @@ class Processor
 
     public function __construct(
         \Psr\Container\ContainerInterface   $container,
-        \App\Command\Response\Factory       $responseFactory,
         \App\Command\ActionCommand\Resolver $resolver
     ) {
         $this->container       = $container;
-        $this->responseFactory = $responseFactory;
         $this->resolver        = $resolver;
     }
 
@@ -41,18 +34,17 @@ class Processor
 
     /**
      * @param \App\Command\ActionCommand\Action $action
-     *
-     * @return \App\Command\Response
      */
     public function process(\App\Command\ActionCommand\Action $action) {
         /** @var string $serviceName */
         $serviceName = $this->resolver->resolve($action->getCommand());
+        if (is_null($serviceName)) {
+            return;
+        }
 
-        /** @var \App\Command\BaseAbstract $command */
+        /** @var \App\Command\ActionCommand\BaseAbstract $command */
         $command = $this->container->get($serviceName);
-
-
-        return $command->run();
+        $command->run($action->getParams());
     }
 
     // ########################################

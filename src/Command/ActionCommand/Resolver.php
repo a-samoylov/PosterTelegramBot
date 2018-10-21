@@ -10,19 +10,21 @@ namespace App\Command\ActionCommand;
 
 class Resolver
 {
-    public const COMMAND_OPEN_LAYOUT = ['open_layout' => 'service'];
+    public const COMMAND_OPEN_LAYOUT = ['open_layout' => 'telegram.action.command.send.message'];
 
     // ########################################
 
     public function resolve(string $commandName)
     {
-        $actionCommands = [
+        $actionsSettings = [
             self::COMMAND_OPEN_LAYOUT
         ];
 
-        foreach ($actionCommands as $command => $serviceName) {
-            if ($command === $commandName) {
-                return $serviceName;
+        foreach ($actionsSettings as $actionsSetting) {
+            foreach ($actionsSetting as $command => $serviceName) {
+                if ($command === $commandName) {
+                    return $serviceName;
+                }
             }
         }
 

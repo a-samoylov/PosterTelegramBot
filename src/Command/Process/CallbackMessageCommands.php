@@ -102,7 +102,7 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
                 $this->actionCommandProcessor->process($this->actionFactory->create($actionData));
             } catch (\Exception $exception) {
                 // todo log
-                return;
+                break;
             }
         }
 
