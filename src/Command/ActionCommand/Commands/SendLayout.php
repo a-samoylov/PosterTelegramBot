@@ -30,18 +30,26 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
      */
     private $inlineKeyboardButtonFactory;
 
+    private $replyKeyboardMarkupFactory;
+
+    private $replyKeyboardButtonFactory;
+
     // ########################################
 
     public function __construct(
-        \App\Repository\Telegram\LayoutRepository                                              $layoutRepository,
-        \App\Telegram\Model\Methods\Send\Message\Factory                                       $sendMessageFactory,
-        \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\Factory                      $inlineKeyboardMarkupFactory,
-        \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\InlineKeyboardButton\Factory $inlineKeyboardButtonFactory
+        \App\Repository\Telegram\LayoutRepository $layoutRepository,
+        \App\Telegram\Model\Methods\Send\Message\Factory $sendMessageFactory,
+        \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\Factory $inlineKeyboardMarkupFactory,
+        \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\InlineKeyboardButton\Factory $inlineKeyboardButtonFactory,
+        \App\Telegram\Model\Type\ReplyMarkup\ReplyKeyboardMarkup\Factory $replyKeyboardMarkupFactory,
+        \App\Telegram\Model\Type\ReplyMarkup\ReplyKeyboardMarkup\KeyboardButton\Factory $replyKeyboardButtonFactory
     ) {
         $this->layoutRepository            = $layoutRepository;
         $this->sendMessageFactory          = $sendMessageFactory;
         $this->inlineKeyboardMarkupFactory = $inlineKeyboardMarkupFactory;
         $this->inlineKeyboardButtonFactory = $inlineKeyboardButtonFactory;
+        $this->replyKeyboardMarkupFactory  = $replyKeyboardMarkupFactory;
+        $this->replyKeyboardButtonFactory  = $replyKeyboardButtonFactory;
     }
 
     // ########################################
@@ -80,15 +88,30 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
                     $row = [];
                     foreach ($buttonsRow as $inlineButton) {
                         $row[] = $this->inlineKeyboardButtonFactory->create($inlineButton['text'], json_encode([
-                            'lt'  => $layout->getId(),
-                            'btn' => $inlineButton['id']
-                        ]));
+                                                                                                                   'lt'  => $layout->getId(),
+                                                                                                                   'btn' => $inlineButton['id']
+                                                                                                               ]));
                     }
 
                     $inlineKeyboardMarkup->addRowInlineKeyboard($row);
                 }
 
                 $sendMessageModel->setReplyMarkup($inlineKeyboardMarkup);
+            } else {
+                if ($replyMarkup['type'] === \App\Telegram\Bot\BotGenerator\Settings::TYPE_REPLY_KEYBOARD_MARKUP) {
+                    $replyKeyboardMarkup = $this->replyKeyboardMarkupFactory->create();
+
+                    foreach ($replyMarkup['buttons'] as $buttonsRow) {
+                        $row = [];
+                        foreach ($buttonsRow as $inlineButton) {
+                            $row[] = $this->replyKeyboardButtonFactory->create($inlineButton['text']);
+                        }
+
+                        $replyKeyboardMarkup->addKeyboardButtonRow($row);
+                    }
+
+                    $sendMessageModel->setReplyMarkup($replyKeyboardMarkup);
+                }
             }
         }
 
