@@ -45,6 +45,13 @@ class User
      */
     private $lastMessageId;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $orders;
+
+    // ########################################
+
     public function getId(): int
     {
         return $this->id;
@@ -94,5 +101,21 @@ class User
     public function setTelegramBot(\App\Entity\Telegram\Bot $telegramBot): void
     {
         $this->telegramBot = $telegramBot;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrders()
+    {
+        return (array)json_decode($this->orders, true);
+    }
+
+    /**
+     * @param array $orders
+     */
+    public function setOrders(array $orders): void
+    {
+        $this->orders = json_encode($orders);
     }
 }

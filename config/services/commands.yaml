@@ -19,3 +19,11 @@ services:
     telegram.action.command.edit.message:
         alias: App\Command\ActionCommand\Commands\EditLayout
         public: true
+
+    telegram.action.command.add.item:
+        alias: App\Command\ActionCommand\Commands\AddItem
+        public: true
+
+    telegram.action.command.remove.item:
+        alias: App\Command\ActionCommand\Commands\RemoveItem
+        public: true

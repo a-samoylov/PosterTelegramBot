@@ -8,7 +8,7 @@
 
 namespace App\Command\ActionCommand\Commands;
 
-class EditLayout extends \App\Command\ActionCommand\BaseAbstract
+class AddItem extends \App\Command\ActionCommand\BaseAbstract
 {
     /**
      * @var \App\Repository\Telegram\LayoutRepository
@@ -34,7 +34,6 @@ class EditLayout extends \App\Command\ActionCommand\BaseAbstract
      * @var \App\Repository\Telegram\UserRepository
      */
     private $userRepository;
-
     // ########################################
 
     public function __construct(
@@ -80,6 +79,19 @@ class EditLayout extends \App\Command\ActionCommand\BaseAbstract
         if (is_null($layout)) {
             return;
         }
+
+        $orders = $user->getOrders();
+
+        if (!isset($orders[$params['item_id']])) {
+            $count = 1;
+            $orders[$params['item_id']] = $count;
+        } else {
+            $count = $orders[$params['item_id']];
+            $count++;
+            $orders[$params['item_id']] = $count;
+        }
+
+        $layout->setText("Количество {$count}");
 
         $editMessageModel = $this->editMessageFactory->create($user->getChat()->getId(), $layout->getBot(), $user->getLastMessageId(), $layout->getText());
 
