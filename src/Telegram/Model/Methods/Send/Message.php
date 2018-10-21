@@ -117,22 +117,23 @@ class Message extends \App\Telegram\Model\Methods\BaseAbstract
                 $inlineKeyboardMarkup = $this->getReplyMarkup();
 
                 $inlineKeyboard = [];
-                foreach ($inlineKeyboardMarkup->getInlineKeyboardRows() as $row) {
+                foreach ($inlineKeyboardMarkup->getInlineKeyboardRows() as $inlineKeyboardRows) {
+                    $row = [];
+
                     /** @var \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\InlineKeyboardButton $inlineKeyboardButton */
-                    foreach ($row as $inlineKeyboardButton) {
-                        $inlineKeyboard[] = [
+                    foreach ($inlineKeyboardRows as $inlineKeyboardButton) {
+                        $row[] = [
                             'text'          => $inlineKeyboardButton->getText(),
                             'callback_data' => $inlineKeyboardButton->getCallbackData()
                         ];
                     }
 
+                    $inlineKeyboard[] = $row;
                     //todo other
                 }
 
                 $result['reply_markup'] = [
-                    'inline_keyboard' => [
-                        $inlineKeyboard
-                    ]
+                    'inline_keyboard' => $inlineKeyboard
                 ];
             }
         }
