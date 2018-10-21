@@ -6,26 +6,20 @@ namespace App\Poster;
 
 class Auth
 {
-    private $applicationId;
+    private $config;
 
-    private $applicationSecret;
-
-    private $redirectUrl;
-
-    public function __construct(int $applicationId, string $applicationSecret, string $redirectUrl)
+    public function __construct(Config $config)
     {
-        $this->applicationId     = $applicationId;
-        $this->applicationSecret = $applicationSecret;
-        $this->redirectUrl       = $redirectUrl;
+        $this->config = $config;
     }
 
     public function getAccessToken(string $account, string $code): string
     {
         $params = [
             'code'               => $code,
-            'application_id'     => $this->applicationId,
-            'application_secret' => $this->applicationSecret,
-            'redirect_uri'       => $this->redirectUrl,
+            'application_id'     => $this->config->getApplicationId(),
+            'application_secret' => $this->config->getApplicationSecret(),
+            'redirect_uri'       => $this->config->getRedirectUrl(),
             'grant_type'         => 'authorization_code',
         ];
 
@@ -50,6 +44,6 @@ class Auth
 
     public function getPosterOAuthUrl(): string
     {
-        return "https://joinposter.com/api/auth?application_id={$this->applicationId}&redirect_uri={$this->redirectUrl}&response_type=code";
+        return "https://joinposter.com/api/auth?application_id={$this->config->getApplicationId()}&redirect_uri={$this->config->getRedirectUrl()}&response_type=code";
     }
 }
