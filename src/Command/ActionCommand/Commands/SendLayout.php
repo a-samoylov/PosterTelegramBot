@@ -119,6 +119,7 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
                     }
 
                     $sendMessageModel->setReplyMarkup($replyKeyboardMarkup);
+                    $replyKeyboardMarkup->setResizeKeyboard(true);
                 }
             }
         }
