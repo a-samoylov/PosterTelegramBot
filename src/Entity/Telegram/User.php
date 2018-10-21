@@ -43,7 +43,7 @@ class User
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $currentLayout;
+    private $lastMessageId;
 
     public function getId(): int
     {
@@ -76,14 +76,14 @@ class User
         $this->chat = $chat;
     }
 
-    public function getCurrentLayout(): int
+    public function getLastMessageId(): int
     {
-        return $this->currentLayout;
+        return $this->lastMessageId;
     }
 
-    public function setCurrentLayout(int $currentLayout): void
+    public function setLastMessageId(int $lastMessageId): void
     {
-        $this->currentLayout = $currentLayout;
+        $this->lastMessageId = $lastMessageId;
     }
 
     public function getTelegramBot(): \App\Entity\Telegram\Bot

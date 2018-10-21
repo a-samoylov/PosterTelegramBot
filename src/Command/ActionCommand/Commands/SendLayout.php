@@ -34,6 +34,8 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
 
     private $replyKeyboardButtonFactory;
 
+    private $userRepository;
+
     // ########################################
 
     public function __construct(
@@ -42,7 +44,8 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
         \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\Factory $inlineKeyboardMarkupFactory,
         \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\InlineKeyboardButton\Factory $inlineKeyboardButtonFactory,
         \App\Telegram\Model\Type\ReplyMarkup\ReplyKeyboardMarkup\Factory $replyKeyboardMarkupFactory,
-        \App\Telegram\Model\Type\ReplyMarkup\ReplyKeyboardMarkup\KeyboardButton\Factory $replyKeyboardButtonFactory
+        \App\Telegram\Model\Type\ReplyMarkup\ReplyKeyboardMarkup\KeyboardButton\Factory $replyKeyboardButtonFactory,
+        \App\Repository\Telegram\UserRepository $userRepository
     ) {
         $this->layoutRepository            = $layoutRepository;
         $this->sendMessageFactory          = $sendMessageFactory;
@@ -50,6 +53,7 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
         $this->inlineKeyboardButtonFactory = $inlineKeyboardButtonFactory;
         $this->replyKeyboardMarkupFactory  = $replyKeyboardMarkupFactory;
         $this->replyKeyboardButtonFactory  = $replyKeyboardButtonFactory;
+        $this->userRepository              = $userRepository;
     }
 
     // ########################################
@@ -71,7 +75,11 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
 
     // ########################################
 
-    public function processCommand(\App\Telegram\Model\Type\Update\BaseAbstract $update, \App\Entity\Telegram\User $user, array $params): void {
+    public function processCommand(
+        \App\Telegram\Model\Type\Update\BaseAbstract $update,
+        \App\Entity\Telegram\User $user,
+        array $params
+    ): void {
         $layout = $this->layoutRepository->findOneBy(['layoutId' => $params['layout_id']]);
         if (is_null($layout)) {
             return;
@@ -115,7 +123,9 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
             }
         }
 
-        $sendMessageModel->send();
+        $message = $sendMessageModel->send();
+        $user->setLastMessageId((int)$message['message_id']);
+        $this->userRepository->save($user);
     }
 
     // ########################################
