@@ -25,7 +25,7 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
      */
     private $callbackMessageRepository;
     /**
-     * @var \App\Command\Process\ActionCommand\Action\Factory
+     * @var \App\Command\ActionCommand\Action\Factory
      */
     private $actionFactory;
 
@@ -35,7 +35,7 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
         \App\Repository\Telegram\UserRepository            $userRepository,
         \App\Repository\Telegram\CallbackMessageRepository $callbackMessageRepository,
         \App\Telegram\Bot\Helper                           $helper,
-        \App\Command\Process\ActionCommand\Action\Factory  $actionFactory
+        \App\Command\ActionCommand\Action\Factory          $actionFactory
     ) {
         $this->userRepository            = $userRepository;
         $this->helper                    = $helper;
@@ -90,7 +90,9 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
             return;
         }
 
-        foreach ($callbackMessage->getActions() as $action) {
+        foreach ($callbackMessage->getActions() as $actionData) {
+            $action = $this->actionFactory->create($actionData);
+
 
         }
 

@@ -6,7 +6,7 @@
  * @license    Any usage is forbidden
  */
 
-namespace App\Command\Process\ActionCommand\Action;
+namespace App\Command\ActionCommand\Action;
 
 class Factory
 {
