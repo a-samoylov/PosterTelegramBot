@@ -11,6 +11,11 @@ namespace App\Command\Process;
 class CallbackMessageCommands extends \App\Command\BaseAbstract
 {
     /**
+     * @var \App\Command\ActionCommand\Processor
+     */
+    private $actionCommandProcessor;
+
+    /**
      * @var \App\Repository\UserRepository
      */
     private $userRepository;
@@ -32,6 +37,7 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
     // ########################################
 
     public function __construct(
+        \App\Command\ActionCommand\Processor               $actionCommandProcessor,
         \App\Repository\Telegram\UserRepository            $userRepository,
         \App\Repository\Telegram\CallbackMessageRepository $callbackMessageRepository,
         \App\Telegram\Bot\Helper                           $helper,
@@ -41,6 +47,7 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
         $this->helper                    = $helper;
         $this->callbackMessageRepository = $callbackMessageRepository;
         $this->actionFactory             = $actionFactory;
+        $this->actionCommandProcessor    = $actionCommandProcessor;
     }
 
     // ########################################
@@ -91,12 +98,15 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
         }
 
         foreach ($callbackMessage->getActions() as $actionData) {
-            $action = $this->actionFactory->create($actionData);
-
-
+            try {
+                $this->actionCommandProcessor->process($this->actionFactory->create($actionData));
+            } catch (\Exception $exception) {
+                // todo log
+                return;
+            }
         }
 
-        $this->helper->sendLayout($userEntity, $callbackMessage->getLayout());
+        //$this->helper->sendLayout($userEntity, $callbackMessage->getLayout());
     }
 
     // ########################################
