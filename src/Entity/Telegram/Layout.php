@@ -29,7 +29,7 @@ class Layout
     /**
      * @var \App\Entity\Telegram\Bot
      * @ORM\ManyToOne(targetEntity="App\Entity\Telegram\Bot")
-     * @JoinColumn(name="bot", nullable=false, referencedColumnName="id")
+     * @JoinColumn(name="bot", nullable=false, referencedColumnName="id", onDelete="CASCADE")
      */
     private $bot;
 

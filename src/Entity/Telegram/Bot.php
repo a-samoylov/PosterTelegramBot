@@ -45,7 +45,18 @@ class Bot
      */
     private $commands;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="App\Entity\Telegram\Layout", mappedBy="bot", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $layouts;
+
     // ########################################
+
+    public function __construct()
+    {
+        $this->layouts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @return int
@@ -149,9 +160,9 @@ class Bot
      */
     public function addCommand(string $name, int $layoutId): void
     {
-        $commands = (array)json_decode($this->commands);
+        $commands        = (array)json_decode($this->commands);
         $commands[$name] = $layoutId;
-        $this->commands = json_encode($commands);
+        $this->commands  = json_encode($commands);
     }
 
     public function removeCommand(string $name)
@@ -164,6 +175,25 @@ class Bot
     public function removeCommands()
     {
         $this->commands = json_encode([]);
+    }
+
+    public function addLayout(Layout $layout)
+    {
+        $this->layouts->add($layout);
+        $layout->setBot($this);
+    }
+
+    public function removeLayout(Layout $layout)
+    {
+        $this->layouts->removeElement($layout);
+    }
+
+    /**
+     * @return \App\Entity\Telegram\Layout[]
+     */
+    public function getLayouts()
+    {
+        return $this->layouts;
     }
 
     // ########################################
