@@ -109,11 +109,7 @@ class BotController extends AbstractController
             return $this->json(['success' => false]);
         }
 
-        try {
-            $botGenerator->generate($bot);
-        } catch (\Exception $exception) {
-            return $this->json(['success' => false]);
-        }
+        $botGenerator->generate($bot);
 
         return $this->json(['success' => true]);
     }
