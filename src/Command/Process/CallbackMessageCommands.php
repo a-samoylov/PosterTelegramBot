@@ -108,8 +108,6 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
                 break;
             }
         }
-
-        //$this->helper->sendLayout($userEntity, $callbackMessage->getLayout());
     }
 
     // ########################################
