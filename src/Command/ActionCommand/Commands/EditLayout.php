@@ -77,7 +77,7 @@ class EditLayout extends \App\Command\ActionCommand\BaseAbstract
             return;
         }
 
-        $editMessageModel = $this->editMessageFactory->create($callbackQuery->getChatInstance()$user, $layout->getBot(), $layout->getText());
+        $editMessageModel = $this->editMessageFactory->create($callbackQuery->getChatInstance(), $layout->getBot(), $callbackQuery->getMessage()->getMessageId(), $layout->getText());
 
         $replyMarkup = $layout->getReplyMarkup();
         if (!empty($replyMarkup)) {
@@ -96,11 +96,11 @@ class EditLayout extends \App\Command\ActionCommand\BaseAbstract
                     $inlineKeyboardMarkup->addRowInlineKeyboard($row);
                 }
 
-                $sendMessageModel->setReplyMarkup($inlineKeyboardMarkup);
+                $editMessageModel->setReplyMarkup($inlineKeyboardMarkup);
             }
         }
 
-        $sendMessageModel->send();
+        $editMessageModel->send();
     }
 
     // ########################################
