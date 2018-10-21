@@ -69,15 +69,12 @@ class EditLayout extends \App\Command\ActionCommand\BaseAbstract
 
     public function processCommand(\App\Telegram\Model\Type\Update\BaseAbstract $update, \App\Entity\Telegram\User $user, array $params): void
     {
-        /** @var \App\Telegram\Model\Type\Update\CallbackQuery $callbackQuery */
-        $callbackQuery = $update;
-
         $layout = $this->layoutRepository->findOneBy(['layoutId' => $params['layout_id']]);
         if (is_null($layout)) {
             return;
         }
 
-        $editMessageModel = $this->editMessageFactory->create($callbackQuery->getChatInstance(), $layout->getBot(), $callbackQuery->getMessage()->getMessageId(), $layout->getText());
+        $editMessageModel = $this->editMessageFactory->create($user->getChat()->getId(), $layout->getBot(), $user->getLastMessageId(), $layout->getText());
 
         $replyMarkup = $layout->getReplyMarkup();
         if (!empty($replyMarkup)) {
@@ -100,7 +97,9 @@ class EditLayout extends \App\Command\ActionCommand\BaseAbstract
             }
         }
 
-        $editMessageModel->send();
+        $message = $editMessageModel->send();
+        $user->setLastMessageId((int)$message['message_id']);
+        $this->userRepository->save($user);
     }
 
     // ########################################
