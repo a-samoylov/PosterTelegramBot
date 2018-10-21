@@ -33,9 +33,13 @@ class Processor
     // ########################################
 
     /**
+     * @param \App\Entity\Telegram\User         $user
      * @param \App\Command\ActionCommand\Action $action
      */
-    public function process(\App\Command\ActionCommand\Action $action) {
+    public function process(
+        \App\Entity\Telegram\User         $user,
+        \App\Command\ActionCommand\Action $action
+    ) {
         /** @var string $serviceName */
         $serviceName = $this->resolver->resolve($action->getCommand());
         if (is_null($serviceName)) {
@@ -44,7 +48,7 @@ class Processor
 
         /** @var \App\Command\ActionCommand\BaseAbstract $command */
         $command = $this->container->get($serviceName);
-        $command->run($action->getParams());
+        $command->run($user, $action->getParams());
     }
 
     // ########################################

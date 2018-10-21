@@ -19,11 +19,11 @@ abstract class BaseAbstract
      */
     abstract public function validate(array $params);
 
-    abstract public function processCommand(array $params): void;
+    abstract public function processCommand(\App\Entity\Telegram\User $user, array $params): void;
 
     // ----------------------------------------
 
-    public function run(array $params)
+    public function run(\App\Entity\Telegram\User $user, array $params)
     {
         $trueOrMessage = $this->validate($params);
 
@@ -31,7 +31,7 @@ abstract class BaseAbstract
             throw new \Exception('Invalid params to action command');
         }
 
-        $this->processCommand($params);
+        $this->processCommand($user, $params);
     }
 
     // ########################################

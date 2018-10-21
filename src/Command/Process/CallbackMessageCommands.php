@@ -99,7 +99,10 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
 
         foreach ($callbackMessage->getActions() as $actionData) {
             try {
-                $this->actionCommandProcessor->process($this->actionFactory->create($actionData));
+                $this->actionCommandProcessor->process(
+                    $userEntity,
+                    $this->actionFactory->create($actionData)
+                );
             } catch (\Exception $exception) {
                 // todo log
                 break;
