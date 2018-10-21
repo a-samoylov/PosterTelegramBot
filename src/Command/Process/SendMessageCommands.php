@@ -24,10 +24,6 @@ class SendMessageCommands extends \App\Command\BaseAbstract
      * @var \App\Repository\Telegram\LayoutRepository
      */
     private $layoutRepository;
-    /**
-     * @var \App\Telegram\Bot\Helper
-     */
-    private $helper;
 
     private $menuMessageRepository;
 
@@ -41,7 +37,6 @@ class SendMessageCommands extends \App\Command\BaseAbstract
         \App\Repository\Telegram\UserRepository $userRepository,
         \App\Repository\Telegram\ChatRepository $telegramChatRepository,
         \App\Repository\Telegram\LayoutRepository $layoutRepository,
-        \App\Telegram\Bot\Helper $helper,
         \App\Repository\Telegram\MenuMessageRepository $menuMessageRepository,
         \App\Command\ActionCommand\Processor $commandProcessor,
         \App\Command\ActionCommand\Action\Factory $actionFactory
@@ -49,7 +44,6 @@ class SendMessageCommands extends \App\Command\BaseAbstract
         $this->userRepository         = $userRepository;
         $this->telegramChatRepository = $telegramChatRepository;
         $this->layoutRepository       = $layoutRepository;
-        $this->helper                 = $helper;
         $this->menuMessageRepository  = $menuMessageRepository;
         $this->commandProcessor       = $commandProcessor;
         $this->actionFactory          = $actionFactory;

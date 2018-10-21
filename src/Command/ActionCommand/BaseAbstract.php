@@ -13,25 +13,29 @@ abstract class BaseAbstract
     // ########################################
 
     /**
-     * @param array $params
+     * @param \App\Telegram\Model\Type\Update\BaseAbstract $update
+     * @param array                                        $params
      *
      * @return string|bool
      */
-    abstract public function validate(array $params);
+    abstract public function validate(\App\Telegram\Model\Type\Update\BaseAbstract $update, array $params);
 
-    abstract public function processCommand(\App\Entity\Telegram\User $user, array $params): void;
+    abstract public function processCommand(\App\Telegram\Model\Type\Update\BaseAbstract $update, \App\Entity\Telegram\User $user, array $params): void;
 
     // ----------------------------------------
 
-    public function run(\App\Entity\Telegram\User $user, array $params)
-    {
-        $trueOrMessage = $this->validate($params);
+    public function run(
+        \App\Telegram\Model\Type\Update\BaseAbstract $update,
+        \App\Entity\Telegram\User $user,
+        array $params
+    ) {
+        $trueOrMessage = $this->validate($update, $params);
 
         if ($trueOrMessage !== true) {
             throw new \Exception('Invalid params to action command');
         }
 
-        $this->processCommand($user, $params);
+        $this->processCommand($update, $user, $params);
     }
 
     // ########################################

@@ -33,12 +33,14 @@ class Processor
     // ########################################
 
     /**
-     * @param \App\Entity\Telegram\User         $user
-     * @param \App\Command\ActionCommand\Action $action
+     * @param \App\Telegram\Model\Type\Update\BaseAbstract $update
+     * @param \App\Entity\Telegram\User                    $user
+     * @param \App\Command\ActionCommand\Action            $action
      */
     public function process(
-        \App\Entity\Telegram\User         $user,
-        \App\Command\ActionCommand\Action $action
+        \App\Telegram\Model\Type\Update\BaseAbstract $update,
+        \App\Entity\Telegram\User                    $user,
+        \App\Command\ActionCommand\Action            $action
     ) {
         /** @var string $serviceName */
         $serviceName = $this->resolver->resolve($action->getCommand());
@@ -48,7 +50,7 @@ class Processor
 
         /** @var \App\Command\ActionCommand\BaseAbstract $command */
         $command = $this->container->get($serviceName);
-        $command->run($user, $action->getParams());
+        $command->run($update, $user, $action->getParams());
     }
 
     // ########################################

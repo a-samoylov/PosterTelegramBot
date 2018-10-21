@@ -23,9 +23,10 @@ class Factory
     // ########################################
 
     /**
-     * @param int            $chatId
-     * @param string|integer $messageId
-     * @param string         $text
+     * @param int                      $chatId
+     * @param \App\Entity\Telegram\Bot $bot
+     * @param string|integer           $messageId
+     * @param string                   $text
      *
      * @return \App\Telegram\Model\Methods\Edit\Message
      */

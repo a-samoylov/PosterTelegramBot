@@ -15,3 +15,7 @@ services:
     telegram.action.command.send.message:
         alias: App\Command\ActionCommand\Commands\SendLayout
         public: true
+
+    telegram.action.command.edit.message:
+        alias: App\Command\ActionCommand\Commands\EditLayout
+        public: true

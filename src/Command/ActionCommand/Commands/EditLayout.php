@@ -8,7 +8,7 @@
 
 namespace App\Command\ActionCommand\Commands;
 
-class SendLayout extends \App\Command\ActionCommand\BaseAbstract
+class EditLayout extends \App\Command\ActionCommand\BaseAbstract
 {
     /**
      * @var \App\Repository\Telegram\LayoutRepository
@@ -16,9 +16,9 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
     private $layoutRepository;
 
     /**
-     * @var \App\Telegram\Model\Methods\Send\Message\Factory
+     * @var \App\Telegram\Model\Methods\Edit\Message\Factory
      */
-    private $sendMessageFactory;
+    private $editMessageFactory;
 
     /**
      * @var \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\Factory
@@ -34,12 +34,12 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
 
     public function __construct(
         \App\Repository\Telegram\LayoutRepository                                              $layoutRepository,
-        \App\Telegram\Model\Methods\Send\Message\Factory                                       $sendMessageFactory,
+        \App\Telegram\Model\Methods\Edit\Message\Factory                                       $editMessageFactory,
         \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\Factory                      $inlineKeyboardMarkupFactory,
         \App\Telegram\Model\Type\ReplyMarkup\InlineKeyboardMarkup\InlineKeyboardButton\Factory $inlineKeyboardButtonFactory
     ) {
         $this->layoutRepository            = $layoutRepository;
-        $this->sendMessageFactory          = $sendMessageFactory;
+        $this->editMessageFactory          = $editMessageFactory;
         $this->inlineKeyboardMarkupFactory = $inlineKeyboardMarkupFactory;
         $this->inlineKeyboardButtonFactory = $inlineKeyboardButtonFactory;
     }
@@ -54,6 +54,10 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
      */
     public function validate(\App\Telegram\Model\Type\Update\BaseAbstract $update, array $params)
     {
+        if (!$update instanceof \App\Telegram\Model\Type\Update\CallbackQuery) {
+            return 'Invalid update type';
+        }
+
         if (!isset($params['layout_id'])) {
             return 'Invalid param layout_id';
         }
@@ -63,13 +67,17 @@ class SendLayout extends \App\Command\ActionCommand\BaseAbstract
 
     // ########################################
 
-    public function processCommand(\App\Telegram\Model\Type\Update\BaseAbstract $update, \App\Entity\Telegram\User $user, array $params): void {
+    public function processCommand(\App\Telegram\Model\Type\Update\BaseAbstract $update, \App\Entity\Telegram\User $user, array $params): void
+    {
+        /** @var \App\Telegram\Model\Type\Update\CallbackQuery $callbackQuery */
+        $callbackQuery = $update;
+
         $layout = $this->layoutRepository->findOneBy(['layoutId' => $params['layout_id']]);
         if (is_null($layout)) {
             return;
         }
 
-        $sendMessageModel = $this->sendMessageFactory->create($user, $layout->getBot(), $layout->getText());
+        $editMessageModel = $this->editMessageFactory->create($callbackQuery->getChatInstance()$user, $layout->getBot(), $layout->getText());
 
         $replyMarkup = $layout->getReplyMarkup();
         if (!empty($replyMarkup)) {
