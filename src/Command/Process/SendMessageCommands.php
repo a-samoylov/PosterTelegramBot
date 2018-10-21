@@ -81,14 +81,12 @@ class SendMessageCommands extends \App\Command\BaseAbstract
             $userEntity = $this->userRepository->create($chatEntity);
         }
 
-        $actions = [];
-
         $commands = $this->getBot()->getCommands();
 
         $text = $update->getMessage()->getText();
 
         if (isset($commands[$text])) {
-            $actions[] = $commands[$text];
+            $actions = $commands[$text];
         } else {
             $sendMessage = $this->menuMessageRepository->findOneBy([
                'bot'        => $this->getBot()->getId(),
@@ -105,7 +103,8 @@ class SendMessageCommands extends \App\Command\BaseAbstract
         foreach ($actions as $actionData) {
             try {
                 $this->commandProcessor->process($update, $userEntity, $this->actionFactory->create($actionData));
-            } catch (\Exception $exception) {
+            } catch (\Throwable $exception) {
+                dump($exception);
                 // todo log
                 break;
             }
