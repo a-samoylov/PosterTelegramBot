@@ -6,7 +6,7 @@
  * @license    Any usage is forbidden
  */
 
-namespace App\Telegram\Bot\BotGenerator\Settings\Relationship;
+namespace App\Telegram\Bot\BotGenerator\Settings\RelationshipInline;
 
 class Factory
 {
@@ -16,10 +16,10 @@ class Factory
         int $layoutId,
         int $buttonId,
         array $action
-    ): \App\Telegram\Bot\BotGenerator\Settings\Relationship {
+    ): \App\Telegram\Bot\BotGenerator\Settings\RelationshipInline {
         //todo validate( check is exist data)
 
-        return new \App\Telegram\Bot\BotGenerator\Settings\Relationship($layoutId, $buttonId, $action);
+        return new \App\Telegram\Bot\BotGenerator\Settings\RelationshipInline($layoutId, $buttonId, $action);
     }
 
     // ########################################

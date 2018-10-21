@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Telegram\CallbackMessageRepository")
- * @Table(name="telegram_callback_message")})
+ * @ORM\Entity(repositoryClass="App\Repository\Telegram\MenuMessageRepository")
+ * @Table(name="telegram_menu_message")})
  */
-class CallbackMessage
+class MenuMessage
 {
     // ########################################
 
@@ -41,9 +41,9 @@ class CallbackMessage
     private $actions;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
-    private $buttonId;
+    private $buttonText;
 
     // ########################################
 
@@ -103,20 +103,14 @@ class CallbackMessage
         $this->actions = json_encode($actions, true);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getButtonId()
+    public function getButtonText(): string
     {
-        return $this->buttonId;
+        return $this->buttonText;
     }
 
-    /**
-     * @param mixed $buttonId
-     */
-    public function setButtonId($buttonId): void
+    public function setButtonText(string $buttonText): void
     {
-        $this->buttonId = $buttonId;
+        $this->buttonText = $buttonText;
     }
 
     // ########################################
