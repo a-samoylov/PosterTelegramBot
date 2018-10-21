@@ -92,6 +92,8 @@ class SendMessageCommands extends \App\Command\BaseAbstract
         }
 
         $this->helper->sendLayout($userEntity, $layout);
+
+        //todo commands + menu
     }
 
     // ########################################

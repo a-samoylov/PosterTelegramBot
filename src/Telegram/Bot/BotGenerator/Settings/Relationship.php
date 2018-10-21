@@ -30,29 +30,21 @@ class Relationship
      */
     private $action;
 
-    /**
-     * @var int
-     */
-    private $anotherId;
-
     // ########################################
 
     /**
-     * @param int    $layoutId
-     * @param int    $buttonId
-     * @param array  $action
-     * @param int    $anotherId
+     * @param int   $layoutId
+     * @param int   $buttonId
+     * @param array $action
      */
     public function __construct(
-        int $layoutId,
-        int $buttonId,
-        array $action,
-        int $anotherId
+        int   $layoutId,
+        int   $buttonId,
+        array $action
     ) {
         $this->layoutId  = $layoutId;
         $this->buttonId  = $buttonId;
         $this->action    = $action;
-        $this->anotherId = $anotherId;
     }
 
     // ########################################
@@ -79,14 +71,6 @@ class Relationship
     public function getAction(): array
     {
         return $this->action;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAnotherId(): int
-    {
-        return $this->anotherId;
     }
 
     // ########################################

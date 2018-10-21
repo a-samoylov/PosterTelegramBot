@@ -24,17 +24,23 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
      * @var \App\Repository\Telegram\CallbackMessageRepository
      */
     private $callbackMessageRepository;
+    /**
+     * @var \App\Command\Process\ActionCommand\Action\Factory
+     */
+    private $actionFactory;
 
     // ########################################
 
     public function __construct(
         \App\Repository\Telegram\UserRepository            $userRepository,
         \App\Repository\Telegram\CallbackMessageRepository $callbackMessageRepository,
-        \App\Telegram\Bot\Helper                           $helper
+        \App\Telegram\Bot\Helper                           $helper,
+        \App\Command\Process\ActionCommand\Action\Factory  $actionFactory
     ) {
         $this->userRepository            = $userRepository;
         $this->helper                    = $helper;
         $this->callbackMessageRepository = $callbackMessageRepository;
+        $this->actionFactory             = $actionFactory;
     }
 
     // ########################################
@@ -52,7 +58,7 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
         $update = $this->getUpdate();
 
         $data = $update->getData();
-        if (!isset($data['bot']) || !isset($data['btn'])) {
+        if (!isset($data['lt']) || !isset($data['btn'])) {
             return 'Wrong callback data';
         }
 
@@ -84,8 +90,9 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
             return;
         }
 
-        //$callbackMessage->getAction();
-        //todo check action
+        foreach ($callbackMessage->getActions() as $action) {
+
+        }
 
         $this->helper->sendLayout($userEntity, $callbackMessage->getLayout());
     }

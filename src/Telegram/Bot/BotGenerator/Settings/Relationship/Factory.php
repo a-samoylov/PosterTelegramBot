@@ -15,18 +15,11 @@ class Factory
     public function create(
         int $layoutId,
         int $buttonId,
-        array $action,
-        int $anotherId
+        array $action
     ): \App\Telegram\Bot\BotGenerator\Settings\Relationship {
-
         //todo validate( check is exist data)
 
-        return new \App\Telegram\Bot\BotGenerator\Settings\Relationship(
-            $layoutId,
-            $buttonId,
-            $action,
-            $anotherId
-        );
+        return new \App\Telegram\Bot\BotGenerator\Settings\Relationship($layoutId, $buttonId, $action);
     }
 
     // ########################################

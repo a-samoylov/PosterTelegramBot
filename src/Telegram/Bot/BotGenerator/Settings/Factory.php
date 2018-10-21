@@ -71,8 +71,7 @@ class Factory
             $result->addRelationship($this->relationshipFactory->create(
                 $relationshipData['layout_id'],
                 $relationshipData['button_id'],
-                $relationshipData['action'],
-                $relationshipData['another_layout_id']
+                $relationshipData['action']
             ));
         }
 

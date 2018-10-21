@@ -38,7 +38,7 @@ class CallbackMessage
     /**
      * @ORM\Column(type="text", nullable=false)
      */
-    private $action;
+    private $actions;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -88,19 +88,19 @@ class CallbackMessage
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getAction(): string
+    public function getActions(): array
     {
-        return $this->action;
+        return (array)json_decode($this->actions, true);
     }
 
     /**
-     * @param string $action
+     * @param array $actions
      */
-    public function setAction(string $action): void
+    public function setActions(array $actions): void
     {
-        $this->action = $action;
+        $this->actions = json_encode($actions, true);
     }
 
     /**
