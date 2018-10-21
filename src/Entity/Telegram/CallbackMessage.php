@@ -23,14 +23,14 @@ class CallbackMessage
 
     /**
      * @var \App\Entity\Telegram\Bot
-     * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Bot")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Telegram\Bot")
      * @JoinColumn(name="bot", nullable=false, referencedColumnName="id")
      */
     private $bot;
 
     /**
      * @var \App\Entity\Telegram\Layout
-     * @ORM\OneToOne(targetEntity="App\Entity\Telegram\Layout")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Telegram\Layout")
      * @JoinColumn(name="layout", nullable=false, referencedColumnName="id")
      */
     private $layout;

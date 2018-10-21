@@ -70,11 +70,13 @@ class CallbackMessageCommands extends \App\Command\BaseAbstract
         }
 
         $data     = $update->getData();
-        $botId    = $data['bot'];
+        $botId    = $this->getBot()->getId();
+        $layoutId = $data['lt'];
         $buttonId = $data['btn'];
 
         $callbackMessage = $this->callbackMessageRepository->findOneBy([
             'bot'      => $botId,
+            'layout'   => $layoutId,
             'buttonId' => $buttonId,
         ]);
 

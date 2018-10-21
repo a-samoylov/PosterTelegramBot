@@ -54,7 +54,7 @@ class Helper
                     $row = [];
                     foreach ($buttonsRow as $inlineButton) {
                         $row[] = $this->inlineKeyboardButtonFactory->create($inlineButton['text'], json_encode([
-                            'bot' => $layout->getBot()->getId(),
+                            'lt'  => $layout->getId(),
                             'btn' => $inlineButton['id']
                         ]));
                     }
