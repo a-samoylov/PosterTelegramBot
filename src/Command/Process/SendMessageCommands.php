@@ -92,7 +92,6 @@ class SendMessageCommands extends \App\Command\BaseAbstract
         } else {
             $sendMessage = $this->menuMessageRepository->findOneBy([
                'bot'        => $this->getBot()->getId(),
-               'layout'     => $userEntity->getCurrentLayout(),
                'buttonText' => $text,
            ]);
 
@@ -105,7 +104,7 @@ class SendMessageCommands extends \App\Command\BaseAbstract
 
         foreach ($actions as $actionData) {
             try {
-                $this->commandProcessor->process($userEntity, $this->actionFactory->create($actionData));
+                $this->commandProcessor->process($update, $userEntity, $this->actionFactory->create($actionData));
             } catch (\Exception $exception) {
                 // todo log
                 break;
