@@ -14,6 +14,7 @@ class Resolver
     public const COMMAND_EDIT_LAYOUT = ['edit_layout' => 'telegram.action.command.edit.message'];
     public const COMMAND_ADD_ITEM    = ['add_item' => 'telegram.action.command.add.item'];
     public const COMMAND_REMOVE_ITEM = ['remove_item' => 'telegram.action.command.remove.item'];
+    public const COMMAND_SEND_PHOTO  = ['send_photo' => 'telegram.action.command.send.photo'];
 
     // ########################################
 
@@ -24,6 +25,7 @@ class Resolver
             self::COMMAND_EDIT_LAYOUT,
             self::COMMAND_ADD_ITEM,
             self::COMMAND_REMOVE_ITEM,
+            self::COMMAND_SEND_PHOTO,
         ];
 
         foreach ($actionsSettings as $actionsSetting) {

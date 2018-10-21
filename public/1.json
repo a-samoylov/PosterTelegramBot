@@ -129,6 +129,13 @@
             "button_text": "Американо (30.00)",
             "action": [
                 {
+                    "command": "send_photo",
+                    "params": {
+                        "caption":"Американо",
+                        "url": "https://genius1.joinposter.com/upload/pos_cdb_67296/menu/product_1540134496_7.png"
+                    }
+                },
+                {
                     "command": "open_layout",
                     "params": {
                         "layout_id": 6

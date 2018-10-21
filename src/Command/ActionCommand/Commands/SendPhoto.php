@@ -58,7 +58,7 @@ class SendPhoto extends \App\Command\ActionCommand\BaseAbstract
         \App\Entity\Telegram\User $user,
         array $params
     ): void {
-        $sendPhotoModel = $this->sendPhotoFactory->create($user->getChat()->getId(), $user->getTelegramBot(), $params['caption'], $params['url']);
+        $sendPhotoModel = $this->sendPhotoFactory->create($user->getChat()->getId(), $user->getTelegramBot(), '', $params['url']);
 
         $message = $sendPhotoModel->send();
 

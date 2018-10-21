@@ -27,3 +27,7 @@ services:
     telegram.action.command.remove.item:
         alias: App\Command\ActionCommand\Commands\RemoveItem
         public: true
+
+    telegram.action.command.send.photo:
+        alias: App\Command\ActionCommand\Commands\SendPhoto
+        public: true
