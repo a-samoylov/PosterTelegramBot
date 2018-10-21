@@ -151,19 +151,19 @@ class Bot
      */
     public function getCommands()
     {
-        return (array)json_decode($this->commands);
+        return (array)json_decode($this->commands, true);
     }
 
     public function addCommand(string $name, array $action): void
     {
-        $commands        = (array)json_decode($this->commands);
+        $commands        = (array)json_decode($this->commands, true);
         $commands[$name] = $action;
         $this->commands  = json_encode($commands);
     }
 
     public function removeCommand(string $name)
     {
-        $commands = (array)json_decode($this->commands);
+        $commands = (array)json_decode($this->commands, true);
         unset($commands[$name]);
         $this->commands = json_encode($commands);
     }
